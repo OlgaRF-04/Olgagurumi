@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olga Gurumi - Inicio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- VARIABLES --- */
+        :root {
+            --rosa-header: #ffe4e1;
+            --rosa-fuerte: #e69ab0;
+            --blanco: #ffffff;
+            --texto-gris: #5c5c5c;
+            --texto-titulo: #5e3a42;
+            --sombra: 0 4px 15px rgba(230, 154, 176, 0.2);
+            --fuente-titulo: "Playfair Display", serif;
+            --fuente-cuerpo: "Lato", sans-serif;
+        }
+        
+        body { 
+            font-family: var(--fuente-cuerpo);
+            background: var(--blanco);
+            color: var(--texto-gris); 
+            margin: 0; padding: 0; 
+        }
+        
+        /* HEADER */
+        header { 
+            background: var(--rosa-header); 
+            padding: 10px 40px; 
+            position: sticky; top: 0; z-index: 1000; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+        }
+        nav { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .logo img { height: 80px; width: 80px; border-radius: 50%; object-fit: cover; border: 3px solid white; } 
+        nav ul { list-style: none; display: flex; gap: 30px; }
+        nav ul li a { text-decoration: none; color: var(--texto-gris); font-weight: bold; transition: color 0.3s; }
+        nav ul li a:hover { color: #fff; text-shadow: 0 0 5px rgba(0,0,0,0.2); }
+
+        /* --- HERO BANNER (100% NÍTIDO) --- */
+        .hero {
+            width: 100%;
+            height: 500px;
+            /* TU IMAGEN */
+            background-image: url('Gemini_Generated_Image_9id6129id6129id6.png'); 
+            background-size: cover;
+            background-position: center;
+            /* Eliminamos capas extra para que se vea FULL HD */
+            position: relative;
+        }
+        /* No hay ::after overlay para evitar el blur o capa blanca */
+        
+        /* BOTONES */
+        .btn { display: inline-block; padding: 12px 35px; background: var(--rosa-fuerte); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; transition: transform 0.2s; border: none; cursor: pointer; font-size: 1.1em; }
+        .btn:hover { transform: translateY(-3px); background: #d6809a; }
+
+        /* SECCIONES */
+        .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
+        h2.titulo-seccion { text-align: center; font-family: var(--fuente-titulo); color: var(--rosa-fuerte); font-size: 2em; margin-bottom: 50px; }
+
+        /* TARJETAS DE PROCESO (BLANCAS) */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: center; }
+        .feature-card {
+            background: #ffffff; /* BLANCO */
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid var(--rosa-header);
+            box-shadow: 0 5px 15px rgba(230, 154, 176, 0.15);
+            transition: transform 0.3s;
+        }
+        .feature-card:hover { transform: translateY(-5px); border-color: var(--rosa-fuerte); box-shadow: 0 10px 25px rgba(230, 154, 176, 0.25); }
+        .feature-icon { font-size: 3.5em; margin-bottom: 15px; display: block; }
+        .feature-title { font-weight: bold; color: var(--texto-titulo); font-size: 1.3em; margin-bottom: 10px; display: block; font-family: var(--fuente-titulo); }
+        .feature-text { font-size: 1em; color: var(--texto-gris); }
+
+        /* --- GALERÍA NOVEDADES (CORREGIDA: MARGEN IGUAL) --- */
+        #galeria { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; }
+        
+        .item { 
+            background: var(--blanco); 
+            border-radius: 20px; 
+            /* AQUI ESTA LA MAGIA: Padding crea el marco blanco igual a ambos lados */
+            padding: 15px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
+            transition: transform 0.3s; 
+            text-align: center;
+            border: 1px solid #eee;
+        }
+        .item:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(230, 154, 176, 0.3); }
+        
+        .item img { 
+            width: 100%; 
+            height: 280px; 
+            object-fit: cover; 
+            border-radius: 15px; /* Redondeamos la imagen también */
+        }
+        
+        .item-info { padding-top: 15px; } /* Solo padding arriba porque ya tiene a los lados */
+        .item-info h3 { margin: 5px 0 10px 0; color: var(--rosa-fuerte); font-family: var(--fuente-titulo); font-size: 1.3em; }
+        
+        .boton-compra { display: block; width: 100%; padding: 10px; margin-top: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 0.9em; }
+        .boton-compra.producto { background: var(--rosa-fuerte); color: white; }
+        .boton-compra.patron { border: 1px solid var(--rosa-fuerte); color: var(--rosa-fuerte); background: white; }
+        .boton-compra:hover { opacity: 0.8; }
+
+        /* FOOTER */
+        footer { background: var(--rosa-header); padding: 40px 20px; margin-top: 60px; text-align: center; }
+        .footer-links a { margin: 0 15px; color: var(--texto-gris); text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html"><img src="logo.jpg" alt="Olga Gurumi Logo"></a>
+            </div>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="catalogo.html">Catálogo</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero"></section>
+
+    <section class="container">
+        <h2 class="titulo-seccion">Proceso de Compra</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🧶</span>
+                <span class="feature-title">1. Elige tu Favorito</span>
+                <p class="feature-text">Revisa el catálogo y enamórate de uno de mis diseños únicos.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">💬</span>
+                <span class="feature-title">2. Escríbeme</span>
+                <p class="feature-text">Haz clic en comprar para chatear conmigo por WhatsApp y coordinar.</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🎁</span>
+                <span class="feature-title">3. Recíbelo con Amor</span>
+                <p class="feature-text">Preparo tu pedido con mucho cuidado y te lo envío listo para regalar.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <h2 class="titulo-seccion">Recién Llegados</h2>
+        <div id="galeria">
+            </div>
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="catalogo.html" class="btn">Ver todo el catálogo</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="contacto.html">Contacto</a>
+        </div>
+        <p style="margin-top: 20px; font-size: 0.9em;">© 2025 Olga Gurumi. Hecho con 💖</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://qawdjysxudpymenemach.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhd2RqeXN4dWRweW1lbmVtYWNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NjAyNTgsImV4cCI6MjA3ODUzNjI1OH0.HBcysWDY8Nzahfx1doBN12mQJb1PNinxLspD6eCDp3A';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const galeria = document.getElementById('galeria');
+        const TU_WHATSAPP = '51922818179';
+
+        async function cargarInicio() {
+            const { data } = await supabaseClient.from('amigurumis').select('*').order('created_at', { ascending: false }).limit(4);
+            if(data) {
+                galeria.innerHTML = '';
+                for (const ami of data) {
+                    let botones = '';
+                    if(ami.precio) {
+                        const msj = encodeURIComponent(`Hola, me interesa "${ami.nombre}".`);
+                        botones += `<a href="https://wa.me/${TU_WHATSAPP}?text=${msj}" target="_blank" class="boton-compra producto">Comprar (S/ ${parseFloat(ami.precio).toFixed(2)})</a>`;
+                    }
+                    if(ami.precio_patron && ami.url_patron) {
+                        botones += `<a href="${ami.url_patron}" target="_blank" class="boton-compra patron">Patrón (S/ ${parseFloat(ami.precio_patron).toFixed(2)})</a>`;
+                    }
+
+                    const item = document.createElement('div');
+                    item.className = 'item';
+                    item.innerHTML = `
+                        <img src="${ami.imagen_url}" alt="${ami.nombre}">
+                        <div class="item-info">
+                            <h3>${ami.nombre}</h3>
+                            ${botones}
+                        </div>
+                    `;
+                    galeria.appendChild(item);
+                }
+            }
+        }
+        document.addEventListener('DOMContentLoaded', cargarInicio);
+    </script>
+</body>
+</html>

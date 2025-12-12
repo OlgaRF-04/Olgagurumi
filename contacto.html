@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Olga Gurumi</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --rosa-header: #ffe4e1;
+            --rosa-fuerte: #e69ab0;
+            --blanco: #ffffff;
+            --texto-gris: #5c5c5c;
+            --fuente-titulo: "Playfair Display", serif;
+            --fuente-cuerpo: "Lato", sans-serif;
+        }
+        
+        body { font-family: var(--fuente-cuerpo); background: var(--blanco); color: var(--texto-gris); margin: 0; padding: 0; }
+        
+        /* HEADER ROSA */
+        header { background: var(--rosa-header); padding: 10px 40px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        nav { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        
+        /* LOGO CIRCULAR */
+        .logo img { height: 80px; width: 80px; border-radius: 50%; object-fit: cover; border: 3px solid white; }
+
+        nav ul { list-style: none; display: flex; gap: 30px; }
+        nav ul li a { text-decoration: none; color: var(--texto-gris); font-weight: bold; transition: color 0.3s; }
+        nav ul li a:hover, nav ul li a.activo { color: #fff; }
+
+        /* SECCIÓN CONTACTO RELLENADA */
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+        h2.titulo-seccion { text-align: center; font-family: var(--fuente-titulo); color: var(--rosa-fuerte); font-size: 2.5em; margin-bottom: 20px; }
+        p.subtitulo { text-align: center; font-size: 1.2em; margin-bottom: 50px; color: #777; }
+
+        .contacto-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+
+        /* TARJETA PRINCIPAL WHATSAPP */
+        .card-whatsapp {
+            background: #fff5f8; border: 2px solid var(--rosa-header); border-radius: 20px; padding: 40px; text-align: center;
+            box-shadow: 0 10px 30px rgba(230, 154, 176, 0.15);
+        }
+        .icono-grande { font-size: 3.5em; margin-bottom: 20px; display: block; }
+        .btn-whatsapp { 
+            background: #25D366; color: white; padding: 15px 35px; border-radius: 50px; 
+            text-decoration: none; font-weight: bold; display: inline-block; font-size: 1.1em; margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3); transition: transform 0.2s;
+        }
+        .btn-whatsapp:hover { transform: translateY(-3px); background: #1faa51; }
+
+        /* LISTA DE INFO (HORARIOS, ETC) */
+        .info-lista { display: flex; flex-direction: column; gap: 20px; justify-content: center; }
+        .info-item { 
+            display: flex; align-items: center; gap: 20px; background: #fff; border: 1px solid #eee; 
+            padding: 20px; border-radius: 15px; box-shadow: 0 5px 10px rgba(0,0,0,0.03); 
+        }
+        .info-icono { font-size: 1.8em; background: var(--rosa-header); padding: 10px; border-radius: 50%; }
+        .info-texto h3 { margin: 0; font-family: var(--fuente-titulo); color: var(--texto-gris); }
+        .info-texto p { margin: 5px 0 0 0; color: #888; font-size: 0.95em; }
+
+        footer { background: var(--rosa-header); padding: 40px 20px; margin-top: 60px; text-align: center; }
+        .footer-links a { margin: 0 15px; color: var(--texto-gris); text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html"><img src="logo.jpg" alt="Olga Gurumi"></a>
+            </div>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="catalogo.html">Catálogo</a></li>
+                <li><a href="contacto.html" class="activo">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2 class="titulo-seccion">Hablemos de tu Idea</h2>
+        <p class="subtitulo">¿Tienes un diseño en mente o quieres personalizar un regalo? Estoy aquí para hacerlo realidad.</p>
+
+        <div class="contacto-grid">
+            <div class="card-whatsapp">
+                <span class="icono-grande">💬</span>
+                <h3 style="font-family: var(--fuente-titulo); font-size: 1.5em; color: var(--texto-gris);">Pedidos y Cotizaciones</h3>
+                <p>La forma más rápida de contactarme es por WhatsApp. Cuéntame qué necesitas y te responderé en breve.</p>
+                <a href="https://wa.me/51922818179" target="_blank" class="btn-whatsapp">
+                    Enviar Mensaje
+                </a>
+            </div>
+
+            <div class="info-lista">
+                <div class="info-item">
+                    <span class="info-icono">⏰</span>
+                    <div class="info-texto">
+                        <h3>Horario de Atención</h3>
+                        <p>Lunes a Sábado: 9:00 AM - 7:00 PM</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icono">📍</span>
+                    <div class="info-texto">
+                        <h3>Ubicación</h3>
+                        <p>Taller en Perú (Envíos a todo el país)</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icono">💌</span>
+                    <div class="info-texto">
+                        <h3>Redes Sociales</h3>
+                        <p>Sígueme para ver más novedades (Pronto)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Inicio</a>
+            <a href="catalogo.html">Catálogo</a>
+            <a href="contacto.html">Contacto</a>
+        </div>
+        <p style="margin-top: 20px; font-size: 0.9em;">© 2025 Olga Gurumi. Hecho con 💖</p>
+    </footer>
+
+</body>
+</html>

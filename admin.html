@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Olga Gurumi</title>
+    <style>
+        /* --- REGLA MAESTRA: Evita que los rellenos desborden el tamaño --- */
+        * { box-sizing: border-box; }
+
+        :root { 
+            --rosa-header: #ffe4e1; 
+            --rosa-fuerte: #e69ab0; 
+            --blanco: #ffffff; 
+            --texto-gris: #5c5c5c; 
+        }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background: var(--blanco); 
+            color: var(--texto-gris); 
+            margin: 0; padding: 0; 
+        }
+        
+        /* HEADER ROSA + LOGO CIRCULAR */
+        header { 
+            background: var(--rosa-header); 
+            padding: 10px 40px; 
+            border-bottom: 2px solid #eee; 
+        }
+        nav { 
+            max-width: 1400px; margin: 0 auto; display: flex; 
+            justify-content: space-between; align-items: center; 
+        }
+        .logo img { 
+            height: 60px; width: 60px; 
+            border-radius: 50%; object-fit: cover; border: 2px solid white; 
+        }
+
+        /* CONTENEDOR PRINCIPAL */
+        .container { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+        h1 { text-align: center; color: var(--rosa-fuerte); margin-bottom: 30px; }
+        
+        /* FORMULARIO */
+        form { 
+            background: #fff; border: 1px solid #eee; 
+            padding: 40px; border-radius: 20px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+            margin-bottom: 50px; 
+        }
+        label { 
+            display: block; margin-bottom: 8px; 
+            font-weight: bold; color: var(--rosa-fuerte); 
+        }
+        input, textarea { 
+            width: 100%; padding: 12px; margin-bottom: 20px; 
+            border: 1px solid #ddd; border-radius: 8px; 
+        }
+        button { 
+            width: 100%; padding: 15px; 
+            background: var(--rosa-fuerte); color: white; 
+            border: none; border-radius: 50px; 
+            font-weight: bold; cursor: pointer; 
+            transition: background 0.3s; font-size: 1.1em;
+        }
+        button:hover { background: #d6809a; }
+
+        /* --- VISTA PREVIA (CORREGIDO: MARGENES Y RELLENO) --- */
+        #galeria { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
+            gap: 25px; 
+        }
+        
+        .item { 
+            border: 1px solid #eee; 
+            border-radius: 20px; 
+            background: #fff;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            /* AQUÍ ESTÁ EL ARREGLO: Espacio interno para que no toque los bordes */
+            padding: 20px; 
+            text-align: center; 
+        }
+        
+        .item img { 
+            width: 100%; 
+            height: 180px; 
+            object-fit: cover; 
+            border-radius: 15px; /* Imagen redondeada */
+            margin-bottom: 15px;
+            display: block; 
+        }
+        
+        .item strong {
+            display: block;
+            color: var(--rosa-fuerte);
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <a href="index.html"><img src="logo.jpg" alt="Olga Gurumi"></a>
+            </div>
+            <a href="index.html" style="text-decoration: none; color: var(--texto-gris); font-weight: bold;">Ir a la Tienda &rarr;</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>Panel de Administración</h1>
+
+        <form id="form-subida">
+            <h2>Subir Producto</h2>
+            
+            <label>Nombre del Amigurumi:</label>
+            <input type="text" id="nombre" required>
+
+            <label>Descripción:</label>
+            <textarea id="descripcion" rows="3" placeholder="Detalles del producto..."></textarea>
+
+            <label>Foto:</label>
+            <input type="file" id="imagen" accept="image/*" required>
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+
+            <label>Precio Amigurumi (S/):</label>
+            <input type="number" id="precio" step="0.01" placeholder="Ej: 50.00">
+
+            <label>Precio Patrón (S/):</label>
+            <input type="number" id="precio_patron" step="0.01" placeholder="Ej: 15.00">
+
+            <label>URL del Patrón (Link externo):</label>
+            <input type="url" id="url_patron" placeholder="https://...">
+
+            <button type="submit" id="btn-subir">Subir Producto</button>
+        </form>
+
+        <h2>Vista Previa (Últimos agregados)</h2>
+        <div id="galeria">Cargando...</div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // --- TUS CREDENCIALES ---
+        const SUPABASE_URL = 'https://qawdjysxudpymenemach.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhd2RqeXN4dWRweW1lbmVtYWNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NjAyNTgsImV4cCI6MjA3ODUzNjI1OH0.HBcysWDY8Nzahfx1doBN12mQJb1PNinxLspD6eCDp3A';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        
+        const galeria = document.getElementById('galeria');
+        const formSubida = document.getElementById('form-subida');
+        const btnSubir = document.getElementById('btn-subir');
+
+        // --- CARGAR VISTA PREVIA ---
+        async function cargarPreview() {
+            const { data } = await supabaseClient.from('amigurumis').select('*').order('created_at', { ascending: false });
+            if(data) {
+                galeria.innerHTML = '';
+                data.forEach(ami => {
+                    const div = document.createElement('div');
+                    div.className = 'item';
+                    
+                    // Si no hay foto, pone una gris de relleno
+                    const imgUrl = ami.imagen_url ? ami.imagen_url : 'https://via.placeholder.com/150';
+                    
+                    div.innerHTML = `
+                        <img src="${imgUrl}">
+                        <strong>${ami.nombre}</strong>
+                        <span>S/ ${parseFloat(ami.precio).toFixed(2) || '0.00'}</span>
+                    `;
+                    galeria.appendChild(div);
+                });
+            } else {
+                galeria.innerHTML = '<p>No hay productos.</p>';
+            }
+        }
+
+        // --- SUBIR PRODUCTO ---
+        formSubida.addEventListener('submit', async (e) => {
+            e.preventDefault(); 
+            
+            // 1. Recolectar datos
+            const nombre = document.getElementById('nombre').value;
+            const descripcion = document.getElementById('descripcion').value;
+            const archivoImagen = document.getElementById('imagen').files[0];
+            
+            // 2. Convertir precios a número (Importante para evitar Error 400)
+            const precioInput = document.getElementById('precio').value;
+            const precio = precioInput ? parseFloat(precioInput) : null;
+
+            const precioPatronInput = document.getElementById('precio_patron').value;
+            const precio_patron = precioPatronInput ? parseFloat(precioPatronInput) : null;
+
+            const url_patron = document.getElementById('url_patron').value || null;
+
+            if (!nombre || !archivoImagen) { alert('Faltan datos obligatorios'); return; }
+
+            btnSubir.disabled = true; 
+            btnSubir.textContent = 'Subiendo imagen... ⏳';
+
+            try {
+                // A. LIMPIAR NOMBRE DE ARCHIVO (Para evitar errores por tildes o espacios)
+                const extension = archivoImagen.name.split('.').pop();
+                const nombreLimpio = archivoImagen.name.replace(/[^a-zA-Z0-9]/g, '_');
+                const nombreArchivo = `public/${Date.now()}_${nombreLimpio}.${extension}`;
+
+                // B. SUBIR A STORAGE
+                const { data: dataUpload, error: errorUpload } = await supabaseClient
+                    .storage
+                    .from('fotos_amigurumis')
+                    .upload(nombreArchivo, archivoImagen);
+
+                if (errorUpload) throw new Error("Error subiendo foto: " + errorUpload.message);
+
+                // C. OBTENER URL PUBLICA
+                const { data: urlData } = supabaseClient
+                    .storage
+                    .from('fotos_amigurumis')
+                    .getPublicUrl(nombreArchivo);
+
+                // D. GUARDAR EN BASE DE DATOS
+                btnSubir.textContent = 'Guardando datos... 💾';
+                
+                const { error: errorInsert } = await supabaseClient
+                    .from('amigurumis')
+                    .insert([{
+                        nombre: nombre, 
+                        descripcion: descripcion, 
+                        precio: precio, 
+                        precio_patron: precio_patron, 
+                        url_patron: url_patron, 
+                        imagen_url: urlData.publicUrl
+                    }]);
+
+                if (errorInsert) throw new Error("Error guardando en BD: " + errorInsert.message);
+
+                alert('¡Producto guardado con éxito! 🎉');
+                formSubida.reset();
+                cargarPreview();
+
+            } catch (error) {
+                console.error(error);
+                alert('❌ HUBO UN PROBLEMA:\n' + error.message);
+            } finally {
+                btnSubir.disabled = false; 
+                btnSubir.textContent = 'Subir Producto';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', cargarPreview);
+    </script>
+</body>
+</html>
