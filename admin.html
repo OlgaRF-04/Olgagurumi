@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Olga Gurumi</title>
+    
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+
     <style>
         /* --- REGLA MAESTRA: Evita que los rellenos desborden el tamaño --- */
         * { box-sizing: border-box; }
@@ -25,7 +28,7 @@
         /* HEADER ROSA + LOGO CIRCULAR */
         header { 
             background: var(--rosa-header); 
-            padding: 10px 40px; 
+            padding: 5px 40px; 
             border-bottom: 2px solid #eee; 
         }
         nav { 
@@ -33,7 +36,7 @@
             justify-content: space-between; align-items: center; 
         }
         .logo img { 
-            height: 60px; width: 60px; 
+            height: 50px; width: 50px; 
             border-radius: 50%; object-fit: cover; border: 2px solid white; 
         }
 
@@ -47,6 +50,7 @@
             padding: 40px; border-radius: 20px; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
             margin-bottom: 50px; 
+            position: relative;
         }
         label { 
             display: block; margin-bottom: 8px; 
@@ -56,16 +60,23 @@
             width: 100%; padding: 12px; margin-bottom: 20px; 
             border: 1px solid #ddd; border-radius: 8px; 
         }
-        button { 
+        
+        /* Botones del Formulario */
+        .btn-submit { 
             width: 100%; padding: 15px; 
             background: var(--rosa-fuerte); color: white; 
             border: none; border-radius: 50px; 
             font-weight: bold; cursor: pointer; 
-            transition: background 0.3s; font-size: 1.1em;
+            transition: 0.3s; font-size: 1.1em;
         }
-        button:hover { background: #d6809a; }
+        .btn-submit:hover { background: #d6809a; }
+        
+        .btn-cancelar { 
+            background: #ccc; margin-top: 10px; display: none; 
+        }
+        .btn-cancelar:hover { background: #bbb; }
 
-        /* --- VISTA PREVIA (CORREGIDO: MARGENES Y RELLENO) --- */
+        /* GRID DE PRODUCTOS */
         #galeria { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); 
@@ -80,9 +91,10 @@
             /* AQUÍ ESTÁ EL ARREGLO: Espacio interno para que no toque los bordes */
             padding: 20px; 
             text-align: center; 
+            position: relative;
         }
         
-        .item img { 
+        .item img.producto-img { 
             width: 100%; 
             height: 180px; 
             object-fit: cover; 
@@ -97,6 +109,43 @@
             font-size: 1.1em;
             margin-bottom: 5px;
         }
+        
+        /* BOTONES DE ACCIÓN CON ICONOS PNG */
+        .acciones { display: flex; gap: 10px; justify-content: center; margin-top: 10px; }
+        
+        .btn-accion { 
+            padding: 8px 12px; 
+            border-radius: 10px; 
+            border: none; 
+            cursor: pointer; 
+            color: white; 
+            font-size: 0.9em; 
+            flex: 1; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 5px; /* Espacio entre icono y texto */
+        }
+        
+        /* Estilo para tus iconos PNG */
+        .icono-btn {
+            width: 18px; 
+            height: 18px; 
+            object-fit: contain;
+            filter: brightness(0) invert(1); /* Hace los iconos blancos para que resalten sobre el botón de color */
+        }
+
+        .btn-borrar { background-color: #ff6b6b; }
+        .btn-editar { background-color: #4dabf7; }
+        .btn-borrar:hover { background-color: #ff4c4c; }
+        .btn-editar:hover { background-color: #3b9add; }
+
+        @media (max-width: 768px) {
+            header { padding: 5px 15px; } 
+            .logo img { height: 40px; width: 40px; } 
+            #galeria { grid-template-columns: repeat(2, 1fr); gap: 10px; } 
+            .item { padding: 10px; } 
+        }
     </style>
 </head>
 <body>
@@ -106,7 +155,7 @@
             <div class="logo">
                 <a href="index.html"><img src="logo.jpg" alt="Olga Gurumi"></a>
             </div>
-            <a href="index.html" style="text-decoration: none; color: var(--texto-gris); font-weight: bold;">Ir a la Tienda &rarr;</a>
+            <a href="index.html" style="text-decoration: none; color: var(--texto-gris); font-weight: bold; font-size: 0.9em;">Ir a la Tienda &rarr;</a>
         </nav>
     </header>
 
@@ -114,38 +163,30 @@
         <h1>Panel de Administración</h1>
 
         <form id="form-subida">
-            <h2>Subir Producto</h2>
+            <h2 id="form-titulo">Subir Producto</h2>
             
-            <label>Nombre del Amigurumi:</label>
-            <input type="text" id="nombre" required>
-
-            <label>Descripción:</label>
-            <textarea id="descripcion" rows="3" placeholder="Detalles del producto..."></textarea>
-
+            <label>Nombre:</label><input type="text" id="nombre" required>
+            <label>Descripción:</label><textarea id="descripcion" rows="3"></textarea>
+            
             <label>Foto:</label>
-            <input type="file" id="imagen" accept="image/*" required>
+            <input type="file" id="imagen" accept="image/*">
+            <small id="aviso-foto" style="color:#888; display:none;">(Deja esto vacío si no quieres cambiar la foto actual)</small>
 
-            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+            <hr style="border:0; border-top:1px solid #eee; margin:30px 0;">
+            <label>Precio Amigurumi (S/):</label><input type="number" id="precio" step="0.01">
+            <label>Precio Patrón (S/):</label><input type="number" id="precio_patron" step="0.01">
+            <label>URL Patrón:</label><input type="url" id="url_patron">
 
-            <label>Precio Amigurumi (S/):</label>
-            <input type="number" id="precio" step="0.01" placeholder="Ej: 50.00">
-
-            <label>Precio Patrón (S/):</label>
-            <input type="number" id="precio_patron" step="0.01" placeholder="Ej: 15.00">
-
-            <label>URL del Patrón (Link externo):</label>
-            <input type="url" id="url_patron" placeholder="https://...">
-
-            <button type="submit" id="btn-subir">Subir Producto</button>
+            <button type="submit" id="btn-subir" class="btn-submit">Subir Producto</button>
+            <button type="button" id="btn-cancelar" class="btn-submit btn-cancelar" onclick="cancelarEdicion()">Cancelar Edición</button>
         </form>
 
-        <h2>Vista Previa (Últimos agregados)</h2>
+        <h2>Mis Productos</h2>
         <div id="galeria">Cargando...</div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // --- TUS CREDENCIALES ---
         const SUPABASE_URL = 'https://qawdjysxudpymenemach.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhd2RqeXN4dWRweW1lbmVtYWNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NjAyNTgsImV4cCI6MjA3ODUzNjI1OH0.HBcysWDY8Nzahfx1doBN12mQJb1PNinxLspD6eCDp3A';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -153,100 +194,139 @@
         const galeria = document.getElementById('galeria');
         const formSubida = document.getElementById('form-subida');
         const btnSubir = document.getElementById('btn-subir');
+        const btnCancelar = document.getElementById('btn-cancelar');
+        const avisoFoto = document.getElementById('aviso-foto');
+        const tituloForm = document.getElementById('form-titulo');
 
-        // --- CARGAR VISTA PREVIA ---
+        let productosCache = []; 
+        let editandoID = null;   
+
+        // --- CARGAR PRODUCTOS ---
         async function cargarPreview() {
             const { data } = await supabaseClient.from('amigurumis').select('*').order('created_at', { ascending: false });
             if(data) {
+                productosCache = data; 
                 galeria.innerHTML = '';
                 data.forEach(ami => {
                     const div = document.createElement('div');
                     div.className = 'item';
-                    
-                    // Si no hay foto, pone una gris de relleno
-                    const imgUrl = ami.imagen_url ? ami.imagen_url : 'https://via.placeholder.com/150';
-                    
+                    const imgUrl = ami.imagen_url || 'https://via.placeholder.com/150';
                     div.innerHTML = `
-                        <img src="${imgUrl}">
+                        <img src="${imgUrl}" class="producto-img">
                         <strong>${ami.nombre}</strong>
-                        <span>S/ ${parseFloat(ami.precio).toFixed(2) || '0.00'}</span>
+                        <div>S/ ${parseFloat(ami.precio).toFixed(2)}</div>
+                        <div class="acciones">
+                            <button onclick="prepararEdicion(${ami.id})" class="btn-accion btn-editar">
+                                <img src="editar.png" class="icono-btn" alt="Editar"> Editar
+                            </button>
+                            <button onclick="eliminarProducto(${ami.id})" class="btn-accion btn-borrar">
+                                <img src="delete.png" class="icono-btn" alt="Borrar"> Borrar
+                            </button>
+                        </div>
                     `;
                     galeria.appendChild(div);
                 });
-            } else {
-                galeria.innerHTML = '<p>No hay productos.</p>';
             }
         }
 
-        // --- SUBIR PRODUCTO ---
+        // --- PREPARAR EDICIÓN ---
+        window.prepararEdicion = (id) => {
+            const producto = productosCache.find(p => p.id === id);
+            if(!producto) return;
+
+            document.getElementById('nombre').value = producto.nombre;
+            document.getElementById('descripcion').value = producto.descripcion || '';
+            document.getElementById('precio').value = producto.precio;
+            document.getElementById('precio_patron').value = producto.precio_patron;
+            document.getElementById('url_patron').value = producto.url_patron || '';
+            
+            editandoID = id;
+            tituloForm.textContent = "Editar Producto";
+            btnSubir.textContent = "Actualizar Cambios";
+            btnSubir.style.background = "#4dabf7"; 
+            btnCancelar.style.display = "block";
+            avisoFoto.style.display = "block";
+            document.getElementById('imagen').required = false; 
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        // --- CANCELAR EDICIÓN ---
+        window.cancelarEdicion = () => {
+            formSubida.reset();
+            editandoID = null;
+            tituloForm.textContent = "Subir Producto";
+            btnSubir.textContent = "Subir Producto";
+            btnSubir.style.background = "#e69ab0"; 
+            btnCancelar.style.display = "none";
+            avisoFoto.style.display = "none";
+            document.getElementById('imagen').required = true;
+        };
+
+        // --- ELIMINAR ---
+        window.eliminarProducto = async (id) => {
+            if(!confirm("¿Borrar definitivamente?")) return;
+            const { error } = await supabaseClient.from('amigurumis').delete().eq('id', id);
+            if(!error) { alert("¡Eliminado!"); cargarPreview(); }
+            else { alert("Error al borrar (Revisa permisos DELETE en Supabase)"); }
+        };
+
+        // --- GUARDAR (CREAR O ACTUALIZAR) ---
         formSubida.addEventListener('submit', async (e) => {
             e.preventDefault(); 
-            
-            // 1. Recolectar datos
             const nombre = document.getElementById('nombre').value;
-            const descripcion = document.getElementById('descripcion').value;
             const archivoImagen = document.getElementById('imagen').files[0];
+            const precio = document.getElementById('precio').value;
             
-            // 2. Convertir precios a número (Importante para evitar Error 400)
-            const precioInput = document.getElementById('precio').value;
-            const precio = precioInput ? parseFloat(precioInput) : null;
+            if (!editandoID && !archivoImagen) { alert('La foto es obligatoria para nuevos productos'); return; }
 
-            const precioPatronInput = document.getElementById('precio_patron').value;
-            const precio_patron = precioPatronInput ? parseFloat(precioPatronInput) : null;
-
-            const url_patron = document.getElementById('url_patron').value || null;
-
-            if (!nombre || !archivoImagen) { alert('Faltan datos obligatorios'); return; }
-
-            btnSubir.disabled = true; 
-            btnSubir.textContent = 'Subiendo imagen... ⏳';
+            btnSubir.disabled = true; btnSubir.textContent = 'Procesando...';
 
             try {
-                // A. LIMPIAR NOMBRE DE ARCHIVO (Para evitar errores por tildes o espacios)
-                const extension = archivoImagen.name.split('.').pop();
-                const nombreLimpio = archivoImagen.name.replace(/[^a-zA-Z0-9]/g, '_');
-                const nombreArchivo = `public/${Date.now()}_${nombreLimpio}.${extension}`;
+                let urlFinalFoto = null;
 
-                // B. SUBIR A STORAGE
-                const { data: dataUpload, error: errorUpload } = await supabaseClient
-                    .storage
-                    .from('fotos_amigurumis')
-                    .upload(nombreArchivo, archivoImagen);
+                if (archivoImagen) {
+                    const nombreArchivo = `public/${Date.now()}_${archivoImagen.name.replace(/[^a-zA-Z0-9]/g, '_')}`;
+                    await supabaseClient.storage.from('fotos_amigurumis').upload(nombreArchivo, archivoImagen);
+                    const { data } = supabaseClient.storage.from('fotos_amigurumis').getPublicUrl(nombreArchivo);
+                    urlFinalFoto = data.publicUrl;
+                }
 
-                if (errorUpload) throw new Error("Error subiendo foto: " + errorUpload.message);
+                const datos = {
+                    nombre,
+                    descripcion: document.getElementById('descripcion').value,
+                    precio: precio ? parseFloat(precio) : null,
+                    precio_patron: document.getElementById('precio_patron').value ? parseFloat(document.getElementById('precio_patron').value) : null,
+                    url_patron: document.getElementById('url_patron').value || null
+                };
 
-                // C. OBTENER URL PUBLICA
-                const { data: urlData } = supabaseClient
-                    .storage
-                    .from('fotos_amigurumis')
-                    .getPublicUrl(nombreArchivo);
+                if (urlFinalFoto) {
+                    datos.imagen_url = urlFinalFoto;
+                }
 
-                // D. GUARDAR EN BASE DE DATOS
-                btnSubir.textContent = 'Guardando datos... 💾';
-                
-                const { error: errorInsert } = await supabaseClient
-                    .from('amigurumis')
-                    .insert([{
-                        nombre: nombre, 
-                        descripcion: descripcion, 
-                        precio: precio, 
-                        precio_patron: precio_patron, 
-                        url_patron: url_patron, 
-                        imagen_url: urlData.publicUrl
-                    }]);
+                let error;
+                if (editandoID) {
+                    const result = await supabaseClient.from('amigurumis').update(datos).eq('id', editandoID);
+                    error = result.error;
+                } else {
+                    if (!urlFinalFoto) throw new Error("Error interno: Falta URL de foto");
+                    const result = await supabaseClient.from('amigurumis').insert([datos]);
+                    error = result.error;
+                }
 
-                if (errorInsert) throw new Error("Error guardando en BD: " + errorInsert.message);
+                if (error) throw error;
 
-                alert('¡Producto guardado con éxito! 🎉');
-                formSubida.reset();
+                alert(editandoID ? '¡Producto actualizado!' : '¡Producto creado!');
+                cancelarEdicion();
                 cargarPreview();
 
             } catch (error) {
                 console.error(error);
-                alert('❌ HUBO UN PROBLEMA:\n' + error.message);
+                alert('Error: ' + error.message);
             } finally {
                 btnSubir.disabled = false; 
-                btnSubir.textContent = 'Subir Producto';
+                if(!editandoID) btnSubir.textContent = 'Subir Producto';
+                else btnSubir.textContent = 'Actualizar Cambios';
             }
         });
 
