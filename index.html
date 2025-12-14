@@ -252,7 +252,7 @@
                 for (const ami of data) {
                     let botones = '';
                     if(ami.precio) {
-                        const msj = encodeURIComponent(`Hola, me interesa "${ami.nombre}".`);
+                        const msj = encodeURIComponent(`Hola, quisiera encargar el amigurumi "${ami.nombre}". ¿Cuál es el precio y tiempo de entrega?`);
                         botones += `<a href="https://wa.me/${TU_WHATSAPP}?text=${msj}" target="_blank" class="boton-compra producto">Comprar (S/ ${parseFloat(ami.precio).toFixed(2)})</a>`;
                     }
                     if(ami.precio_patron && ami.url_patron) {
