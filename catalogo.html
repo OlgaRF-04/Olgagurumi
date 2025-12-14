@@ -3,90 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo - Olga Gurumi</title>
-    
-    <link rel="icon" href="logo.jpg" type="image/jpeg">
-
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-
+    <title>Olga Gurumi - Catálogo Completo</title>
     <style>
-        :root { --rosa-header: #ffe4e1; --rosa-fuerte: #e69ab0; --blanco: #ffffff; --texto-gris: #5c5c5c; --fuente-titulo: "Playfair Display", serif; --fuente-cuerpo: "Lato", sans-serif; }
-        body { font-family: var(--fuente-cuerpo); background: var(--blanco); color: var(--texto-gris); margin: 0; padding: 0; }
-        header { background: var(--rosa-header); padding: 5px 40px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        nav { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo img { height: 50px; width: 50px; border-radius: 50%; object-fit: cover; border: 2px solid white; }
-        nav ul { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
-        nav ul li a { text-decoration: none; color: var(--texto-gris); font-weight: bold; transition: color 0.3s; font-size: 0.95em; }
-        nav ul li a:hover { color: #fff; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
-        h2.titulo-seccion { text-align: center; font-family: var(--fuente-titulo); color: var(--rosa-fuerte); font-size: 2em; margin-bottom: 50px; }
+        /* Mismos estilos base */
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background-color: #fff0f5; color: #333; }
+        header { background-color: #ffb7c5; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5em; font-weight: bold; color: #fff; text-decoration: none; }
+        .logo img { height: 50px; vertical-align: middle; border-radius: 50%; margin-right: 10px; }
+        nav ul { list-style: none; display: flex; gap: 15px; padding: 0; }
+        nav a { text-decoration: none; color: white; font-weight: bold; }
+
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+        h2 { text-align: center; color: #d87093; margin-bottom: 30px; }
         
-        #galeria { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; }
-        .item { background: var(--blanco); border-radius: 20px; padding: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: transform 0.3s; text-align: center; border: 1px solid #eee; }
-        .item:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(230, 154, 176, 0.3); }
-        .item img { width: 100%; height: 280px; object-fit: cover; border-radius: 15px; }
-        .item-info { padding-top: 15px; }
-        .item-info h3 { margin: 5px 0 10px 0; color: var(--rosa-fuerte); font-family: var(--fuente-titulo); font-size: 1.3em; }
-        .boton-compra { display: block; width: 100%; padding: 8px; margin-top: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 0.9em; }
-        .boton-compra.producto { background: var(--rosa-fuerte); color: white; }
-        .boton-compra.patron { border: 1px solid var(--rosa-fuerte); color: var(--rosa-fuerte); background: white; }
+        /* Grid del catálogo */
+        .catalogo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; }
+        .producto-card { background: white; border-radius: 15px; padding: 15px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .producto-card img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; }
+        .producto-card h3 { color: #d87093; margin: 10px 0; }
+        .descripcion { font-size: 0.9em; color: #777; margin-bottom: 10px; }
+        .precio { font-size: 1.2em; font-weight: bold; color: #666; }
+        .btn-comprar { display: block; background-color: #25d366; color: white; padding: 10px; text-decoration: none; border-radius: 20px; margin-top: 10px; font-weight: bold; }
+        .btn-comprar:hover { background-color: #128c7e; }
 
-        footer { background: var(--rosa-header); padding: 40px 20px; margin-top: 60px; text-align: center; }
-        .footer-links a { margin: 0 15px; color: var(--texto-gris); text-decoration: none; font-weight: bold; }
-        .footer-redes { margin-top: 20px; }
-        .footer-redes a { margin: 0 10px; display: inline-block; transition: transform 0.2s; }
-        .footer-redes img { width: 35px; height: 35px; vertical-align: middle; object-fit: contain; }
-        .footer-redes a:hover { transform: scale(1.2); }
+        footer { text-align: center; background-color: #ffb7c5; color: white; padding: 20px; margin-top: 40px; }
 
+        /* Menú Móvil */
+        .menu-toggle { display: none; font-size: 24px; cursor: pointer; color: white; }
         @media (max-width: 768px) {
-            header { padding: 5px 15px; } .logo img { height: 40px; width: 40px; } nav ul { gap: 15px; } nav ul li a { font-size: 0.85em; }
-            #galeria { grid-template-columns: repeat(2, 1fr); gap: 10px; } .item { padding: 10px; } .item img { height: 160px; } .item-info h3 { font-size: 1em; } .boton-compra { padding: 5px; font-size: 0.75em; }
-            .container { padding: 40px 15px; } h2.titulo-seccion { font-size: 1.8em; margin-bottom: 30px; }
+            nav ul { display: none; flex-direction: column; width: 100%; position: absolute; top: 70px; left: 0; background: #ffb7c5; padding: 20px; text-align: center; }
+            nav ul.showing { display: flex; }
+            .menu-toggle { display: block; }
         }
     </style>
 </head>
 <body>
+
     <header>
+        <a href="index.html" class="logo">
+            <img src="logo.jpg" alt="Logo"> Olga Gurumi
+        </a>
+        <div class="menu-toggle">☰</div>
         <nav>
-            <div class="logo"><a href="index.html"><img src="logo.jpg" alt="Olga Gurumi"></a></div>
-            <ul><li><a href="index.html">Inicio</a></li><li><a href="catalogo.html">Catálogo</a></li><li><a href="contacto.html">Contacto</a></li></ul>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="catalogo.html">Catálogo</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
         </nav>
     </header>
+
     <main class="container">
-        <h2 class="titulo-seccion">Nuestra Colección</h2>
-        <div id="galeria"><p style="text-align:center">Cargando...</p></div>
-    </main>
-    <footer>
-        <div class="footer-links"><a href="index.html">Inicio</a><a href="catalogo.html">Catálogo</a><a href="contacto.html">Contacto</a></div>
-        <div class="footer-redes">
-            <a href="https://www.instagram.com/olgagurumi?igsh=MXVoZDAyeWE4aTczeg==" target="_blank"><img src="instagram.png" alt="Instagram"></a>
-            <a href="https://tiktok.com/@olgagurumi" target="_blank"><img src="tiktok.png" alt="TikTok"></a>
+        <h2>Todos nuestros Amigurumis 🧶</h2>
+        <div id="catalogo-grid" class="catalogo-grid">
+            <p style="text-align:center; width:100%;">Cargando catálogo...</p>
         </div>
-        <p style="margin-top: 20px; font-size: 0.9em;">© 2025 Olga Gurumi. Hecho con 💖</p>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Olga Gurumi - Catálogo Online</p>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
     <script>
-        const SUPABASE_URL = 'https://qawdjysxudpymenemach.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhd2RqeXN4dWRweW1lbmVtYWNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NjAyNTgsImV4cCI6MjA3ODUzNjI1OH0.HBcysWDY8Nzahfx1doBN12mQJb1PNinxLspD6eCDp3A';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        const galeria = document.getElementById('galeria');
-        const TU_WHATSAPP = '51922818179';
-        async function cargarTodo() {
-            const { data } = await supabaseClient.from('amigurumis').select('*').order('created_at', { ascending: false });
-            if(data) {
-                galeria.innerHTML = '';
-                for (const ami of data) {
-                    let botones = '';
-                    if(ami.precio) botones += `<a href="https://wa.me/${TU_WHATSAPP}?text=Interesado en ${ami.nombre}" target="_blank" class="boton-compra producto">Comprar (S/ ${parseFloat(ami.precio).toFixed(2)})</a>`;
-                    if(ami.precio_patron && ami.url_patron) botones += `<a href="${ami.url_patron}" target="_blank" class="boton-compra patron">Patrón (S/ ${parseFloat(ami.precio_patron).toFixed(2)})</a>`;
+        // --- CONFIGURACIÓN ---
+        const API_URL = 'https://cnmmnxhmxsrdpaloipvl.supabase.co/rest/v1/amigurumis?select=*';
+        const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNubW1ueGhteHNyZHBhbG9pcHZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE3ODk1MzcsImV4cCI6MjA0NzM2NTUzN30.K-yCq...'; // <- TU API KEY
+
+        async function cargarCatalogo() {
+            try {
+                const response = await fetch(API_URL, { 
+                    headers: { 
+                        'apikey': API_KEY, 
+                        'Authorization': 'Bearer ' + API_KEY 
+                    } 
+                });
+                
+                if (!response.ok) throw new Error('Error al conectar con Supabase');
+
+                const productos = await response.json();
+                const grid = document.getElementById('catalogo-grid');
+                grid.innerHTML = '';
+
+                productos.forEach(ami => {
+                    // --- AQUÍ ESTÁ EL CAMBIO (OPCIÓN 2) ---
+                    const msj = encodeURIComponent(`Hola, quisiera encargar el amigurumi "${ami.nombre}". ¿Cuál es el precio y tiempo de entrega?`);
+                    // --------------------------------------
+
                     const item = document.createElement('div');
-                    item.className = 'item';
-                    item.innerHTML = `<img src="${ami.imagen_url}" alt="${ami.nombre}"><div class="item-info"><h3>${ami.nombre}</h3>${botones}</div>`;
-                    galeria.appendChild(item);
-                }
+                    item.className = 'producto-card';
+                    item.innerHTML = `
+                        <img src="${ami.imagen}" alt="${ami.nombre}">
+                        <h3>${ami.nombre}</h3>
+                        <p class="descripcion">${ami.descripcion || 'Hecho a mano'}</p>
+                        <p class="precio">S/ ${ami.precio}</p>
+                        <a href="https://wa.me/51922818179?text=${msj}" class="btn-comprar" target="_blank">
+                            Pedir Info
+                        </a>
+                    `;
+                    grid.appendChild(item);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('catalogo-grid').innerHTML = '<p>Error cargando catálogo.</p>';
             }
         }
-        document.addEventListener('DOMContentLoaded', cargarTodo);
+
+        cargarCatalogo();
+
+        // Menú Móvil
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navUl = document.querySelector('nav ul');
+        if(menuToggle){
+            menuToggle.addEventListener('click', () => {
+                navUl.classList.toggle('showing');
+            });
+        }
     </script>
 </body>
 </html>

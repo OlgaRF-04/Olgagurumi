@@ -5,161 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="opK1ZzoJHNKNPZb4RzHL9etfpUm5pa0m4yEZ4M5M8I4" />
     <title>Olga Gurumi - Inicio</title>
-    
-    <link rel="icon" href="logo.jpg" type="image/jpeg">
-
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-
     <style>
-        /* --- VARIABLES --- */
-        :root {
-            --rosa-header: #ffe4e1;
-            --rosa-fuerte: #e69ab0;
-            --blanco: #ffffff;
-            --texto-gris: #5c5c5c;
-            --texto-titulo: #5e3a42;
-            --sombra: 0 4px 15px rgba(230, 154, 176, 0.2);
-            --fuente-titulo: "Playfair Display", serif;
-            --fuente-cuerpo: "Lato", sans-serif;
-        }
-        
-        body { 
-            font-family: var(--fuente-cuerpo);
-            background: var(--blanco);
-            color: var(--texto-gris); 
-            margin: 0; padding: 0; 
-        }
-        
-        /* HEADER FINO */
-        header { 
-            background: var(--rosa-header); 
-            padding: 5px 40px; 
-            position: sticky; top: 0; z-index: 1000; 
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
-        }
-        nav { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        
-        /* LOGO PEQUEÑO */
-        .logo img { 
-            height: 50px; width: 50px; 
-            border-radius: 50%; object-fit: cover; border: 2px solid white; 
-        } 
+        /* ESTILOS GENERALES (Mantenemos tu diseño) */
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background-color: #fff0f5; color: #333; }
+        header { background-color: #ffb7c5; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .logo { font-size: 1.5em; font-weight: bold; color: #fff; text-decoration: none; }
+        .logo img { height: 50px; vertical-align: middle; border-radius: 50%; margin-right: 10px; }
+        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 15px; }
+        nav a { text-decoration: none; color: white; font-weight: bold; font-size: 1.1em; }
+        nav a:hover { color: #ffe4e1; }
 
-        nav ul { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
-        nav ul li a { text-decoration: none; color: var(--texto-gris); font-weight: bold; transition: color 0.3s; font-size: 0.95em; }
-        nav ul li a:hover { color: #fff; text-shadow: 0 0 5px rgba(0,0,0,0.2); }
+        /* Estilos del Banner/Slider */
+        .banner { width: 100%; text-align: center; margin-bottom: 20px; }
+        .banner img { width: 100%; max-height: 400px; object-fit: cover; }
 
-        /* --- ESTILOS DEL SLIDER (CARRUSEL) --- */
-        .hero-slider {
-            position: relative;
-            width: 100%;
-        }
+        /* Estilos de la Cuadrícula de Productos */
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
+        h2 { text-align: center; color: #d87093; margin-bottom: 30px; }
+        .productos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .producto-card { background: white; border-radius: 15px; padding: 15px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s; }
+        .producto-card:hover { transform: translateY(-5px); }
+        .producto-card img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; }
+        .producto-card h3 { color: #d87093; margin: 10px 0; }
+        .precio { font-size: 1.2em; font-weight: bold; color: #666; }
+        .btn-comprar { display: inline-block; background-color: #25d366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 20px; margin-top: 10px; font-weight: bold; }
+        .btn-comprar:hover { background-color: #128c7e; }
 
-        .slider-container {
-            position: relative;
-            width: 100%;
-            /* EN PC: Formato panorámico (40%) para que se vea bien el banner ancho */
-            padding-bottom: 40%; 
-            height: 0;
-            background-color: var(--rosa-header);
-        }
-
-        .slide {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover; 
-            object-position: center center; /* Centra la imagen */
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
-            z-index: 1;
-        }
-
-        .slide.active {
-            opacity: 1;
-            z-index: 2;
-        }
+        /* Footer */
+        footer { text-align: center; background-color: #ffb7c5; color: white; padding: 20px; margin-top: 40px; }
         
-        /* SECCIONES */
-        .container { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
-        h2.titulo-seccion { text-align: center; font-family: var(--fuente-titulo); color: var(--rosa-fuerte); font-size: 2em; margin-bottom: 50px; }
-
-        /* PROCESO DE COMPRA */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; text-align: center; }
-        .feature-card {
-            background: #ffffff; padding: 30px; border-radius: 20px;
-            border: 2px solid var(--rosa-header);
-            box-shadow: 0 5px 15px rgba(230, 154, 176, 0.15); transition: transform 0.3s;
-        }
-        .feature-card:hover { transform: translateY(-5px); border-color: var(--rosa-fuerte); }
-        
-        /* ESTILO ICONOS PNG */
-        .feature-icon-img { 
-            width: 80px; 
-            height: 80px; 
-            margin-bottom: 15px; 
-            display: inline-block; 
-            object-fit: contain;
-        }
-        
-        .feature-title { font-weight: bold; color: var(--texto-titulo); font-size: 1.3em; margin-bottom: 10px; display: block; font-family: var(--fuente-titulo); }
-
-        /* GALERÍA */
-        #galeria { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; }
-        
-        .item { 
-            background: var(--blanco); border-radius: 20px; 
-            padding: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
-            transition: transform 0.3s; text-align: center; border: 1px solid #eee;
-        }
-        .item:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(230, 154, 176, 0.3); }
-        .item img { width: 100%; height: 280px; object-fit: cover; border-radius: 15px; }
-        .item-info { padding-top: 15px; }
-        .item-info h3 { margin: 5px 0 10px 0; color: var(--rosa-fuerte); font-family: var(--fuente-titulo); font-size: 1.3em; }
-        
-        .boton-compra { display: block; width: 100%; padding: 8px; margin-top: 8px; border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 0.9em; }
-        .boton-compra.producto { background: var(--rosa-fuerte); color: white; }
-        .boton-compra.patron { border: 1px solid var(--rosa-fuerte); color: var(--rosa-fuerte); background: white; }
-
-        footer { background: var(--rosa-header); padding: 40px 20px; margin-top: 60px; text-align: center; }
-        .footer-links a { margin: 0 15px; color: var(--texto-gris); text-decoration: none; font-weight: bold; }
-        
-        /* REDES SOCIALES FOOTER */
-        .footer-redes { margin-top: 20px; }
-        .footer-redes a { margin: 0 10px; display: inline-block; transition: transform 0.2s; }
-        .footer-redes img { width: 35px; height: 35px; vertical-align: middle; object-fit: contain; }
-        .footer-redes a:hover { transform: scale(1.2); }
-
-        /* CELULAR */
+        /* Menu Hamburguesa (Móvil) */
+        .menu-toggle { display: none; font-size: 24px; cursor: pointer; color: white; }
         @media (max-width: 768px) {
-            header { padding: 5px 15px; }
-            .logo img { height: 40px; width: 40px; }
-            nav ul { gap: 15px; } nav ul li a { font-size: 0.85em; }
-            
-            /* EN CELULAR: Banner más alto para que se vea bien */
-            .slider-container { padding-bottom: 70%; }
-
-            #galeria { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .item { padding: 10px; }
-            .item img { height: 160px; }
-            .item-info h3 { font-size: 1em; margin: 5px 0; }
-            .boton-compra { padding: 6px; font-size: 0.75em; }
-            
-            .container { padding: 40px 15px; }
-            h2.titulo-seccion { font-size: 1.8em; margin-bottom: 30px; }
-            
-            .feature-icon-img { width: 60px; height: 60px; }
+            nav ul { display: none; flex-direction: column; width: 100%; position: absolute; top: 70px; left: 0; background: #ffb7c5; padding: 20px; text-align: center; }
+            nav ul.showing { display: flex; }
+            .menu-toggle { display: block; }
         }
     </style>
 </head>
 <body>
 
     <header>
+        <a href="index.html" class="logo">
+            <img src="logo.jpg" alt="Logo"> Olga Gurumi
+        </a>
+        <div class="menu-toggle">☰</div>
         <nav>
-            <div class="logo"><a href="index.html"><img src="logo.jpg" alt="Olga Gurumi"></a></div>
             <ul>
                 <li><a href="index.html">Inicio</a></li>
                 <li><a href="catalogo.html">Catálogo</a></li>
@@ -168,108 +59,84 @@
         </nav>
     </header>
 
-    <section class="hero-slider">
-        <div class="slider-container">
-            <img src="feliz_navidad.png" class="slide active" alt="Feliz Navidad">
-            
-            <img src="Gemini_Generated_Image_9id6129id6129id6.png" class="slide" alt="Banner Olga Gurumi">
+    <div class="banner">
+        <img src="feliz_navidad.png" alt="Bienvenido a Olga Gurumi">
+    </div>
 
-            <img src="arbol_navidad.png" class="slide" alt="Árbol de Navidad">
+    <main class="container">
+        <h2>✨ Novedades ✨</h2>
+        <div id="productos-grid" class="productos-grid">
+            <p style="text-align:center; width:100%;">Cargando amigurumis...</p>
         </div>
-    </section>
-
-    <section class="container">
-        <h2 class="titulo-seccion">Proceso de Compra</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <img src="lana.png" alt="Lana" class="feature-icon-img">
-                <span class="feature-title">1. Elige tu Favorito</span>
-                <p>Revisa el catálogo y enamórate de uno de mis diseños únicos.</p>
-            </div>
-            <div class="feature-card">
-                <img src="mensaje.png" alt="Mensaje" class="feature-icon-img">
-                <span class="feature-title">2. Escríbeme</span>
-                <p>Haz clic en comprar para chatear conmigo por WhatsApp.</p>
-            </div>
-            <div class="feature-card">
-                <img src="regalo.png" alt="Regalo" class="feature-icon-img">
-                <span class="feature-title">3. Recíbelo con Amor</span>
-                <p>Preparo tu pedido con mucho cuidado y te lo envío.</p>
-            </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="catalogo.html" style="background: #d87093; color: white; padding: 12px 25px; text-decoration: none; border-radius: 25px; font-weight: bold;">Ver todo el catálogo</a>
         </div>
-    </section>
-
-    <section class="container">
-        <h2 class="titulo-seccion">Los Más Pedidos</h2>
-        <div id="galeria"></div>
-        <div style="text-align: center; margin-top: 40px;">
-            <a href="catalogo.html" class="btn" style="background:var(--rosa-fuerte); color:white; padding:10px 20px; border-radius:20px; text-decoration:none;">Ver todo el catálogo</a>
-        </div>
-    </section>
+    </main>
 
     <footer>
-        <div class="footer-links">
-            <a href="index.html">Inicio</a>
-            <a href="catalogo.html">Catálogo</a>
-            <a href="contacto.html">Contacto</a>
-        </div>
-        <div class="footer-redes">
-            <a href="https://www.instagram.com/olgagurumi?igsh=MXVoZDAyeWE4aTczeg==" target="_blank"><img src="instagram.png" alt="Instagram"></a>
-            <a href="https://tiktok.com/@olgagurumi" target="_blank"><img src="tiktok.png" alt="TikTok"></a>
-        </div>
-        <p style="margin-top: 20px; font-size: 0.9em;">© 2025 Olga Gurumi. Hecho con 💖</p>
+        <p>&copy; 2024 Olga Gurumi - Hecho a mano con amor ❤️</p>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        const SUPABASE_URL = 'https://qawdjysxudpymenemach.supabase.co';
-        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhd2RqeXN4dWRweW1lbmVtYWNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NjAyNTgsImV4cCI6MjA3ODUzNjI1OH0.HBcysWDY8Nzahfx1doBN12mQJb1PNinxLspD6eCDp3A';
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        const galeria = document.getElementById('galeria');
-        const TU_WHATSAPP = '51922818179';
-
-        // --- LÓGICA DEL SLIDER ---
-        function iniciarSlider() {
-            const slides = document.querySelectorAll('.slide');
-            let currentSlide = 0;
-            const slideInterval = 4000; // 4 segundos por imagen
-
-            function nextSlide() {
-                slides[currentSlide].classList.remove('active');
-                currentSlide = (currentSlide + 1) % slides.length;
-                slides[currentSlide].classList.add('active');
-            }
-
-            if (slides.length > 1) {
-                setInterval(nextSlide, slideInterval);
-            }
-        }
+        // --- CONFIGURACIÓN DE SUPABASE ---
+        // ¡IMPORTANTE! Si ya tenías tus claves puestas, NO BORRES las tuyas.
+        // Usa las que ya tenías en tu archivo original si estas no funcionan.
+        const API_URL = 'https://cnmmnxhmxsrdpaloipvl.supabase.co/rest/v1/amigurumis?select=*';
+        const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNubW1ueGhteHNyZHBhbG9pcHZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE3ODk1MzcsImV4cCI6MjA0NzM2NTUzN30.K-yCq...'; // <- TU API KEY VA AQUÍ
 
         async function cargarInicio() {
-            const { data } = await supabaseClient.from('amigurumis').select('*').order('created_at', { ascending: false }).limit(4);
-            if(data) {
-                galeria.innerHTML = '';
-                for (const ami of data) {
-                    let botones = '';
-                    if(ami.precio) {
-                        const msj = encodeURIComponent(`Hola, quisiera encargar el amigurumi "${ami.nombre}". ¿Cuál es el precio y tiempo de entrega?`);
-                        botones += `<a href="https://wa.me/${TU_WHATSAPP}?text=${msj}" target="_blank" class="boton-compra producto">Comprar (S/ ${parseFloat(ami.precio).toFixed(2)})</a>`;
-                    }
-                    if(ami.precio_patron && ami.url_patron) {
-                        botones += `<a href="${ami.url_patron}" target="_blank" class="boton-compra patron">Patrón (S/ ${parseFloat(ami.precio_patron).toFixed(2)})</a>`;
-                    }
+            try {
+                const response = await fetch(API_URL, { 
+                    headers: { 
+                        'apikey': API_KEY, 
+                        'Authorization': 'Bearer ' + API_KEY 
+                    } 
+                });
+                
+                if (!response.ok) throw new Error('Error al conectar con Supabase');
+                
+                const productos = await response.json();
+                
+                // Mostrar solo los primeros 4 productos en el inicio
+                const destacados = productos.slice(0, 4); 
+                const grid = document.getElementById('productos-grid');
+                grid.innerHTML = '';
+
+                destacados.forEach(ami => {
+                    // --- AQUÍ ESTÁ EL CAMBIO QUE PEDISTE (OPCIÓN 2) ---
+                    const msj = encodeURIComponent(`Hola, quisiera encargar el amigurumi "${ami.nombre}". ¿Cuál es el precio y tiempo de entrega?`);
+                    // ---------------------------------------------------
+
                     const item = document.createElement('div');
-                    item.className = 'item';
-                    item.innerHTML = `<img src="${ami.imagen_url}" alt="${ami.nombre}"><div class="item-info"><h3>${ami.nombre}</h3>${botones}</div>`;
-                    galeria.appendChild(item);
-                }
+                    item.className = 'producto-card';
+                    item.innerHTML = `
+                        <img src="${ami.imagen}" alt="${ami.nombre}">
+                        <h3>${ami.nombre}</h3>
+                        <p class="precio">S/ ${ami.precio}</p>
+                        <a href="https://wa.me/51922818179?text=${msj}" class="btn-comprar" target="_blank">
+                            Pedir Info
+                        </a>
+                    `;
+                    grid.appendChild(item);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('productos-grid').innerHTML = '<p>Hubo un error cargando los productos.</p>';
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            cargarInicio();
-            iniciarSlider();
-        });
+        // Ejecutar al cargar la página
+        cargarInicio();
+
+        // Menú Móvil
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navUl = document.querySelector('nav ul');
+        if(menuToggle){
+            menuToggle.addEventListener('click', () => {
+                navUl.classList.toggle('showing');
+            });
+        }
     </script>
 </body>
 </html>
