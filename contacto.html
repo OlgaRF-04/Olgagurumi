@@ -1,61 +1,253 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contacto - Olga Gurumi</title>
-    
+
     <link rel="icon" href="logo.jpg" type="image/jpeg">
 
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
     <style>
-        :root { --rosa-header: #ffe4e1; --rosa-fuerte: #e69ab0; --blanco: #ffffff; --texto-gris: #5c5c5c; --fuente-titulo: "Playfair Display", serif; --fuente-cuerpo: "Lato", sans-serif; }
-        body { font-family: var(--fuente-cuerpo); background: var(--blanco); color: var(--texto-gris); margin: 0; padding: 0; }
-        
-        header { background: var(--rosa-header); padding: 5px 40px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        nav { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-        .logo img { height: 50px; width: 50px; border-radius: 50%; object-fit: cover; border: 2px solid white; }
-        nav ul { list-style: none; display: flex; gap: 25px; margin: 0; padding: 0; }
-        nav ul li a { text-decoration: none; color: var(--texto-gris); font-weight: bold; transition: color 0.3s; font-size: 0.95em; }
-        nav ul li a:hover { color: #fff; }
+        :root {
+            --rosa-header: #ffe4e1;
+            --rosa-fuerte: #e69ab0;
+            --blanco: #ffffff;
+            --texto-gris: #5c5c5c;
+            --fuente-titulo: "Playfair Display", serif;
+            --fuente-cuerpo: "Lato", sans-serif;
+        }
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
-        h2.titulo-seccion { text-align: center; font-family: var(--fuente-titulo); color: var(--rosa-fuerte); font-size: 2.5em; margin-bottom: 20px; }
-        .contacto-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
-        
-        .card-whatsapp { background: #fff5f8; border: 2px solid var(--rosa-header); border-radius: 20px; padding: 40px; text-align: center; }
-        .icono-grande { font-size: 3.5em; margin-bottom: 20px; display: block; }
-        .btn-whatsapp { background: #25D366; color: white; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 20px; }
-        
-        .info-item { display: flex; align-items: center; gap: 20px; background: #fff; border: 1px solid #eee; padding: 20px; border-radius: 15px; margin-bottom: 20px; }
-        .info-icono { font-size: 1.8em; background: var(--rosa-header); padding: 10px; border-radius: 50%; }
-        
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff0f5;
+            color: #333;
+        }
+
+        header {
+            background-color: #ffb7c5;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 50px;
+            vertical-align: middle;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffe4e1;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        h2.titulo-seccion {
+            text-align: center;
+            font-family: var(--fuente-titulo);
+            color: var(--rosa-fuerte);
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .contacto-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .card-whatsapp {
+            background: white;
+            border: 2px solid #ffb7c5;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .icono-grande {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .btn-whatsapp {
+            background: #ffb7c5;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #d87093;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-icono {
+            font-size: 1.8em;
+            background: var(--rosa-header);
+            padding: 10px;
+            border-radius: 50%;
+        }
+
         /* REDES SOCIALES EN CONTACTO */
-        .redes-sociales { margin-top: 10px; }
-        .redes-sociales a { text-decoration: none; margin-right: 15px; display: inline-block; transition: transform 0.2s; }
-        .redes-sociales img { width: 35px; height: 35px; vertical-align: middle; object-fit: contain; }
-        .redes-sociales a:hover { transform: scale(1.2); }
+        .redes-sociales {
+            margin-top: 10px;
+        }
 
-        footer { background: var(--rosa-header); padding: 40px 20px; margin-top: 60px; text-align: center; }
-        .footer-links a { margin: 0 15px; color: var(--texto-gris); text-decoration: none; font-weight: bold; }
-        
+        .redes-sociales a {
+            text-decoration: none;
+            margin-right: 15px;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .redes-sociales img {
+            width: 35px;
+            height: 35px;
+            vertical-align: middle;
+            object-fit: contain;
+        }
+
+        .redes-sociales a:hover {
+            transform: scale(1.2);
+        }
+
+        footer {
+            background: var(--rosa-header);
+            padding: 40px 20px;
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .footer-links a {
+            margin: 0 15px;
+            color: var(--texto-gris);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
         /* REDES SOCIALES FOOTER */
-        .footer-redes { margin-top: 20px; }
-        .footer-redes a { margin: 0 10px; display: inline-block; transition: transform 0.2s; }
-        .footer-redes img { width: 35px; height: 35px; vertical-align: middle; object-fit: contain; }
-        .footer-redes a:hover { transform: scale(1.2); }
+        .footer-redes {
+            margin-top: 20px;
+        }
+
+        .footer-redes a {
+            margin: 0 10px;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .footer-redes img {
+            width: 35px;
+            height: 35px;
+            vertical-align: middle;
+            object-fit: contain;
+        }
+
+        .footer-redes a:hover {
+            transform: scale(1.2);
+        }
+
+        /* Menu Hamburguesa (Móvil) */
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+        }
 
         @media (max-width: 768px) {
-            header { padding: 5px 15px; } .logo img { height: 40px; width: 40px; } nav ul { gap: 15px; } nav ul li a { font-size: 0.8em; }
-            .container { padding: 40px 15px; }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                background: #ffb7c5;
+                padding: 20px;
+                text-align: center;
+                z-index: 1000;
+            }
+
+            nav ul.showing {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .container {
+                padding: 40px 15px;
+            }
         }
     </style>
 </head>
+
 <body>
     <header>
+        <a href="index.html" class="logo">
+            <img src="logo.jpg" alt="Logo"> Olga Gurumi
+        </a>
+        <div class="menu-toggle">☰</div>
         <nav>
-            <div class="logo"><a href="index.html"><img src="logo.jpg" alt="Olga Gurumi"></a></div>
-            <ul><li><a href="index.html">Inicio</a></li><li><a href="catalogo.html">Catálogo</a></li><li><a href="contacto.html">Contacto</a></li></ul>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="catalogo.html">Catálogo</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
         </nav>
     </header>
     <main class="container">
@@ -68,15 +260,27 @@
                 <a href="https://wa.me/51922818179" target="_blank" class="btn-whatsapp">Enviar Mensaje</a>
             </div>
             <div>
-                <div class="info-item"><span class="info-icono">⏰</span><div><h3>Horario</h3><p>Lun-Sab: 9am - 7pm</p></div></div>
-                <div class="info-item"><span class="info-icono">📍</span><div><h3>Ubicación</h3><p>Perú (Envíos nacionales)</p></div></div>
+                <div class="info-item"><span class="info-icono">⏰</span>
+                    <div>
+                        <h3>Horario</h3>
+                        <p>Lun-Sab: 9am - 7pm</p>
+                    </div>
+                </div>
+                <div class="info-item"><span class="info-icono">📍</span>
+                    <div>
+                        <h3>Ubicación</h3>
+                        <p>Perú (Envíos nacionales)</p>
+                    </div>
+                </div>
                 <div class="info-item">
                     <span class="info-icono">💌</span>
                     <div>
                         <h3>Sígueme</h3>
                         <div class="redes-sociales">
-                            <a href="https://www.instagram.com/olgagurumi?igsh=MXVoZDAyeWE4aTczeg==" target="_blank"><img src="instagram.png" alt="Instagram"></a>
-                            <a href="https://tiktok.com/@olgagurumi" target="_blank"><img src="tiktok.png" alt="TikTok"></a>
+                            <a href="https://www.instagram.com/olgagurumi?igsh=MXVoZDAyeWE4aTczeg=="
+                                target="_blank"><img src="instagram.png" alt="Instagram"></a>
+                            <a href="https://tiktok.com/@olgagurumi" target="_blank"><img src="tiktok.png"
+                                    alt="TikTok"></a>
                         </div>
                     </div>
                 </div>
@@ -84,12 +288,25 @@
         </div>
     </main>
     <footer>
-        <div class="footer-links"><a href="index.html">Inicio</a><a href="catalogo.html">Catálogo</a><a href="contacto.html">Contacto</a></div>
+        <div class="footer-links"><a href="index.html">Inicio</a><a href="catalogo.html">Catálogo</a><a
+                href="contacto.html">Contacto</a></div>
         <div class="footer-redes">
-            <a href="https://www.instagram.com/olgagurumi?igsh=MXVoZDAyeWE4aTczeg==" target="_blank"><img src="instagram.png" alt="Instagram"></a>
+            <a href="https://www.instagram.com/olgagurumi?igsh=MXVoZDAyeWE4aTczeg==" target="_blank"><img
+                    src="instagram.png" alt="Instagram"></a>
             <a href="https://tiktok.com/@olgagurumi" target="_blank"><img src="tiktok.png" alt="TikTok"></a>
         </div>
         <p style="margin-top: 20px; font-size: 0.9em;">© 2025 Olga Gurumi. Hecho con 💖</p>
     </footer>
+    <script>
+        // Menú Móvil
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navUl = document.querySelector('nav ul');
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navUl.classList.toggle('showing');
+            });
+        }
+    </script>
 </body>
+
 </html>

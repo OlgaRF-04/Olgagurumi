@@ -1,42 +1,163 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Olga Gurumi - Catálogo Completo</title>
     <style>
         /* Mismos estilos base */
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background-color: #fff0f5; color: #333; }
-        header { background-color: #ffb7c5; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5em; font-weight: bold; color: #fff; text-decoration: none; }
-        .logo img { height: 50px; vertical-align: middle; border-radius: 50%; margin-right: 10px; }
-        nav ul { list-style: none; display: flex; gap: 15px; padding: 0; }
-        nav a { text-decoration: none; color: white; font-weight: bold; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff0f5;
+            color: #333;
+        }
 
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
-        h2 { text-align: center; color: #d87093; margin-bottom: 30px; }
-        
+        header {
+            background-color: #ffb7c5;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 50px;
+            vertical-align: middle;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #d87093;
+            margin-bottom: 30px;
+        }
+
         /* Grid del catálogo */
-        .catalogo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; }
-        .producto-card { background: white; border-radius: 15px; padding: 15px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .producto-card img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; }
-        .producto-card h3 { color: #d87093; margin: 10px 0; }
-        .descripcion { font-size: 0.9em; color: #777; margin-bottom: 10px; }
-        .precio { font-size: 1.2em; font-weight: bold; color: #666; }
-        .btn-comprar { display: block; background-color: #25d366; color: white; padding: 10px; text-decoration: none; border-radius: 20px; margin-top: 10px; font-weight: bold; }
-        .btn-comprar:hover { background-color: #128c7e; }
+        .catalogo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
 
-        footer { text-align: center; background-color: #ffb7c5; color: white; padding: 20px; margin-top: 40px; }
+        .producto-card {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .producto-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .producto-card h3 {
+            color: #d87093;
+            margin: 10px 0;
+        }
+
+        .descripcion {
+            font-size: 0.9em;
+            color: #777;
+            margin-bottom: 10px;
+            display: none; /* Ocultamos la descripción para dar más prioridad a la foto */
+        }
+
+        .precio {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .btn-comprar {
+            display: block;
+            background-color: #ffb7c5;
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-comprar:hover {
+            background-color: #d87093;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #ffb7c5;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
 
         /* Menú Móvil */
-        .menu-toggle { display: none; font-size: 24px; cursor: pointer; color: white; }
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+        }
+
         @media (max-width: 768px) {
-            nav ul { display: none; flex-direction: column; width: 100%; position: absolute; top: 70px; left: 0; background: #ffb7c5; padding: 20px; text-align: center; }
-            nav ul.showing { display: flex; }
-            .menu-toggle { display: block; }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                background: #ffb7c5;
+                padding: 20px;
+                text-align: center;
+            }
+
+            nav ul.showing {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <header>
@@ -66,18 +187,18 @@
 
     <script>
         // --- CONFIGURACIÓN ---
-        const API_URL = 'https://cnmmnxhmxsrdpaloipvl.supabase.co/rest/v1/amigurumis?select=*';
-        const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNubW1ueGhteHNyZHBhbG9pcHZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE3ODk1MzcsImV4cCI6MjA0NzM2NTUzN30.K-yCq...'; // <- TU API KEY
+        const API_URL = 'https://qawdjysxudpymenemach.supabase.co/rest/v1/amigurumis?select=*';
+        const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhd2RqeXN4dWRweW1lbmVtYWNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NjAyNTgsImV4cCI6MjA3ODUzNjI1OH0.HBcysWDY8Nzahfx1doBN12mQJb1PNinxLspD6eCDp3A';
 
         async function cargarCatalogo() {
             try {
-                const response = await fetch(API_URL, { 
-                    headers: { 
-                        'apikey': API_KEY, 
-                        'Authorization': 'Bearer ' + API_KEY 
-                    } 
+                const response = await fetch(API_URL, {
+                    headers: {
+                        'apikey': API_KEY,
+                        'Authorization': 'Bearer ' + API_KEY
+                    }
                 });
-                
+
                 if (!response.ok) throw new Error('Error al conectar con Supabase');
 
                 const productos = await response.json();
@@ -92,7 +213,7 @@
                     const item = document.createElement('div');
                     item.className = 'producto-card';
                     item.innerHTML = `
-                        <img src="${ami.imagen}" alt="${ami.nombre}">
+                        <img src="${ami.imagen_url || 'https://via.placeholder.com/250'}" alt="${ami.nombre}">
                         <h3>${ami.nombre}</h3>
                         <p class="descripcion">${ami.descripcion || 'Hecho a mano'}</p>
                         <p class="precio">S/ ${ami.precio}</p>
@@ -113,11 +234,12 @@
         // Menú Móvil
         const menuToggle = document.querySelector('.menu-toggle');
         const navUl = document.querySelector('nav ul');
-        if(menuToggle){
+        if (menuToggle) {
             menuToggle.addEventListener('click', () => {
                 navUl.classList.toggle('showing');
             });
         }
     </script>
 </body>
+
 </html>

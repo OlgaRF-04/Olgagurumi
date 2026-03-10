@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,42 +8,247 @@
     <title>Olga Gurumi - Inicio</title>
     <style>
         /* ESTILOS GENERALES (Mantenemos tu diseño) */
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background-color: #fff0f5; color: #333; }
-        header { background-color: #ffb7c5; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .logo { font-size: 1.5em; font-weight: bold; color: #fff; text-decoration: none; }
-        .logo img { height: 50px; vertical-align: middle; border-radius: 50%; margin-right: 10px; }
-        nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 15px; }
-        nav a { text-decoration: none; color: white; font-weight: bold; font-size: 1.1em; }
-        nav a:hover { color: #ffe4e1; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff0f5;
+            color: #333;
+        }
 
-        /* Estilos del Banner/Slider */
-        .banner { width: 100%; text-align: center; margin-bottom: 20px; }
-        .banner img { width: 100%; max-height: 400px; object-fit: cover; }
+        header {
+            background-color: #ffb7c5;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 50px;
+            vertical-align: middle;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        nav a:hover {
+            color: #ffe4e1;
+        }
+
+        /* Estilos del Banner Principal (Hero) */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 70px);
+            /* Ocupa toda la pantalla restando el header */
+            background: linear-gradient(135deg, #d87093 0%, #ffb7c5 50%, #fbd3e9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            animation: fadeIn 1.5s ease-in-out;
+            padding: 0 20px;
+        }
+
+        .banner-content h1 {
+            font-size: 3.5em;
+            margin: 0 0 10px 0;
+            text-shadow: 2px 2px 5px rgba(216, 112, 147, 0.8);
+            font-weight: 800;
+        }
+
+        .banner-content p {
+            font-size: 1.5em;
+            margin: 0 0 25px 0;
+            text-shadow: 1px 1px 3px rgba(216, 112, 147, 0.6);
+            font-weight: 500;
+        }
+
+        .btn-banner {
+            background-color: #fff;
+            color: #d87093;
+            padding: 15px 35px;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        .btn-banner:hover {
+            transform: translateY(-4px) scale(1.05);
+            background-color: #fff0f5;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive para el banner */
+        @media (max-width: 768px) {
+            .banner-content h1 {
+                font-size: 2.2em;
+            }
+
+            .banner-content p {
+                font-size: 1.1em;
+            }
+
+            .hero-banner {
+                height: calc(100vh - 70px);
+            }
+        }
 
         /* Estilos de la Cuadrícula de Productos */
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 20px; }
-        h2 { text-align: center; color: #d87093; margin-bottom: 30px; }
-        .productos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .producto-card { background: white; border-radius: 15px; padding: 15px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: transform 0.3s; }
-        .producto-card:hover { transform: translateY(-5px); }
-        .producto-card img { width: 100%; height: 250px; object-fit: cover; border-radius: 10px; }
-        .producto-card h3 { color: #d87093; margin: 10px 0; }
-        .precio { font-size: 1.2em; font-weight: bold; color: #666; }
-        .btn-comprar { display: inline-block; background-color: #25d366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 20px; margin-top: 10px; font-weight: bold; }
-        .btn-comprar:hover { background-color: #128c7e; }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #d87093;
+            margin-bottom: 30px;
+        }
+
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .producto-card {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .producto-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .producto-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .producto-card h3 {
+            color: #d87093;
+            margin: 10px 0;
+        }
+
+        .precio {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .btn-comprar {
+            display: inline-block;
+            background-color: #ffb7c5;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-comprar:hover {
+            background-color: #d87093;
+        }
 
         /* Footer */
-        footer { text-align: center; background-color: #ffb7c5; color: white; padding: 20px; margin-top: 40px; }
-        
+        footer {
+            text-align: center;
+            background-color: #ffb7c5;
+            color: white;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
         /* Menu Hamburguesa (Móvil) */
-        .menu-toggle { display: none; font-size: 24px; cursor: pointer; color: white; }
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: white;
+        }
+
         @media (max-width: 768px) {
-            nav ul { display: none; flex-direction: column; width: 100%; position: absolute; top: 70px; left: 0; background: #ffb7c5; padding: 20px; text-align: center; }
-            nav ul.showing { display: flex; }
-            .menu-toggle { display: block; }
+            nav ul {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                background: #ffb7c5;
+                padding: 20px;
+                text-align: center;
+            }
+
+            nav ul.showing {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <header>
@@ -59,8 +265,12 @@
         </nav>
     </header>
 
-    <div class="banner">
-        <img src="feliz_navidad.png" alt="Bienvenido a Olga Gurumi">
+    <div class="hero-banner">
+        <div class="banner-content">
+            <h1>Bienvenidos a Olga Gurumi</h1>
+            <p>Encuentra el amigurumi perfecto hecho a mano con amor ❤️</p>
+            <a href="catalogo.html" class="btn-banner">Ver Catálogo</a>
+        </div>
     </div>
 
     <main class="container">
@@ -68,9 +278,11 @@
         <div id="productos-grid" class="productos-grid">
             <p style="text-align:center; width:100%;">Cargando amigurumis...</p>
         </div>
-        
+
         <div style="text-align: center; margin-top: 30px;">
-            <a href="catalogo.html" style="background: #d87093; color: white; padding: 12px 25px; text-decoration: none; border-radius: 25px; font-weight: bold;">Ver todo el catálogo</a>
+            <a href="catalogo.html"
+                style="background: #d87093; color: white; padding: 12px 25px; text-decoration: none; border-radius: 25px; font-weight: bold;">Ver
+                todo el catálogo</a>
         </div>
     </main>
 
@@ -82,24 +294,24 @@
         // --- CONFIGURACIÓN DE SUPABASE ---
         // ¡IMPORTANTE! Si ya tenías tus claves puestas, NO BORRES las tuyas.
         // Usa las que ya tenías en tu archivo original si estas no funcionan.
-        const API_URL = 'https://cnmmnxhmxsrdpaloipvl.supabase.co/rest/v1/amigurumis?select=*';
-        const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNubW1ueGhteHNyZHBhbG9pcHZsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzE3ODk1MzcsImV4cCI6MjA0NzM2NTUzN30.K-yCq...'; // <- TU API KEY VA AQUÍ
+        const API_URL = 'https://qawdjysxudpymenemach.supabase.co/rest/v1/amigurumis?select=*';
+        const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhd2RqeXN4dWRweW1lbmVtYWNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NjAyNTgsImV4cCI6MjA3ODUzNjI1OH0.HBcysWDY8Nzahfx1doBN12mQJb1PNinxLspD6eCDp3A';
 
         async function cargarInicio() {
             try {
-                const response = await fetch(API_URL, { 
-                    headers: { 
-                        'apikey': API_KEY, 
-                        'Authorization': 'Bearer ' + API_KEY 
-                    } 
+                const response = await fetch(API_URL, {
+                    headers: {
+                        'apikey': API_KEY,
+                        'Authorization': 'Bearer ' + API_KEY
+                    }
                 });
-                
+
                 if (!response.ok) throw new Error('Error al conectar con Supabase');
-                
+
                 const productos = await response.json();
-                
+
                 // Mostrar solo los primeros 4 productos en el inicio
-                const destacados = productos.slice(0, 4); 
+                const destacados = productos.slice(0, 4);
                 const grid = document.getElementById('productos-grid');
                 grid.innerHTML = '';
 
@@ -111,7 +323,7 @@
                     const item = document.createElement('div');
                     item.className = 'producto-card';
                     item.innerHTML = `
-                        <img src="${ami.imagen}" alt="${ami.nombre}">
+                        <img src="${ami.imagen_url || 'https://via.placeholder.com/250'}" alt="${ami.nombre}">
                         <h3>${ami.nombre}</h3>
                         <p class="precio">S/ ${ami.precio}</p>
                         <a href="https://wa.me/51922818179?text=${msj}" class="btn-comprar" target="_blank">
@@ -132,11 +344,12 @@
         // Menú Móvil
         const menuToggle = document.querySelector('.menu-toggle');
         const navUl = document.querySelector('nav ul');
-        if(menuToggle){
+        if (menuToggle) {
             menuToggle.addEventListener('click', () => {
                 navUl.classList.toggle('showing');
             });
         }
     </script>
 </body>
+
 </html>
