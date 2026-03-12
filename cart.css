@@ -24,7 +24,8 @@
     align-items: center;
     padding: 20px;
     border-bottom: 1px solid #eee;
-    background: #fff0f5;
+    background: #ffb7c5;
+    color: white;
 }
 
 .cart-items {
@@ -123,22 +124,21 @@
 }
 
 .btn-checkout {
-    display: block;
-    width: 100%;
-    background: #ffce94;
+    background: #ffb7c5;
     color: #fff;
     text-align: center;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 25px;
     font-weight: bold;
     text-decoration: none;
     border: none;
     cursor: pointer;
     font-size: 1.1em;
+    box-shadow: 0 4px 10px rgba(255, 183, 197, 0.4);
 }
 
 .btn-checkout:hover {
-    background: #ffb86c;
+    background: #d87093;
 }
 
 .cart-overlay {
