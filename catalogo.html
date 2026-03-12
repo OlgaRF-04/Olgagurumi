@@ -229,37 +229,39 @@
         </div>
     </main>
 
-    <!-- Modal Detalles -->
-    <div id="modal-detalles" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff0f5; z-index: 3000; overflow-y: auto;">
-        <!-- Top Bar -->
-        <div style="display: flex; justify-content: space-between; padding: 20px; align-items: center; background: #fff0f5; position: sticky; top: 0; z-index: 10;">
-            <button onclick="cerrarDetalles()" style="background: white; border: none; font-size: 20px; color: #333; cursor: pointer; border-radius: 30px; width: 45px; height: 45px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">←</button>
-            <h3 style="margin: 0; color: #333; font-weight: bold;">Details</h3>
-            <span style="font-size: 20px; background: white; border-radius: 30px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; color: #ffb7c5; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">♡</span>
-        </div>
-        
-        <!-- Big Image -->
-        <div style="padding: 0 20px;">
-            <img id="modal-img" src="" style="width: 100%; border-radius: 30px; aspect-ratio: 1/1; object-fit: cover; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
-        </div>
-        
-        <!-- Info -->
-        <div style="padding: 25px 20px; background: white; border-top-left-radius: 40px; border-top-right-radius: 40px; margin-top: -20px; position: relative; min-height: 50vh;">
-            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
-                <div>
-                    <h2 id="modal-titulo" style="margin: 0 0 5px 0; font-size: 1.5em; color: #333;"></h2>
-                    <p style="color: #666; font-size: 0.9em; margin: 0;">⭐ 5.0 (Rating)</p>
-                </div>
-                <h2 id="modal-precio" style="margin: 0; font-size: 1.5em; color: #333;"></h2>
+    <!-- Modal Detalles Flotante -->
+    <div id="modal-detalles" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 3000; justify-content: center; align-items: center;">
+        <div style="background: #fff0f5; width: 90%; max-width: 400px; border-radius: 30px; overflow-y: auto; max-height: 90vh; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.3);">
+            <!-- Top Bar -->
+            <div style="display: flex; justify-content: space-between; padding: 15px 20px; align-items: center; background: #fff0f5; position: sticky; top: 0; z-index: 10;">
+                <button onclick="cerrarDetalles()" style="background: white; border: none; font-size: 20px; color: #333; cursor: pointer; border-radius: 50%; width: 40px; height: 40px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">✕</button>
+                <h3 style="margin: 0; color: #333; font-weight: bold; font-size: 1.2em;">Detalles</h3>
+                <span style="font-size: 18px; background: white; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; color: #ffb7c5; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">♡</span>
             </div>
             
-            <p style="font-weight: bold; margin: 20px 0 5px 0; color: #333;">Description</p>
-            <p id="modal-desc" style="color: #888; font-size: 0.95em; line-height: 1.6; margin: 0;"></p>
+            <!-- Big Image -->
+            <div style="padding: 0 20px;">
+                <img id="modal-img" src="" style="width: 100%; border-radius: 20px; aspect-ratio: 1/1; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            </div>
             
-            <div style="margin-top: 40px; text-align: center;">
-                <a id="modal-btn-comprar" href="#" target="_blank" style="display: block; width: 100%; background: #ffb7c5; color: white; text-align: center; padding: 18px; border-radius: 30px; font-size: 1.1em; font-weight: bold; text-decoration: none; box-shadow: 0 8px 20px rgba(255,183,197,0.6); transition: transform 0.2s;">
-                    🛒 Comprar por WhatsApp
-                </a>
+            <!-- Info -->
+            <div style="padding: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                    <div>
+                        <h2 id="modal-titulo" style="margin: 0 0 5px 0; font-size: 1.3em; color: #333;"></h2>
+                        <p style="color: #666; font-size: 0.85em; margin: 0;">⭐ 5.0 (Valoración)</p>
+                    </div>
+                    <h2 id="modal-precio" style="margin: 0; font-size: 1.3em; color: #d87093;"></h2>
+                </div>
+                
+                <p style="font-weight: bold; margin: 15px 0 5px 0; color: #333; font-size: 0.95em;">Descripción</p>
+                <p id="modal-desc" style="color: #666; font-size: 0.9em; line-height: 1.5; margin: 0;"></p>
+                
+                <div style="margin-top: 25px; text-align: center;">
+                    <a id="modal-btn-comprar" href="#" target="_blank" style="display: block; width: 100%; background: #ffb7c5; color: white; text-align: center; padding: 15px; border-radius: 25px; font-size: 1.05em; font-weight: bold; text-decoration: none; box-shadow: 0 5px 15px rgba(255,183,197,0.5); transition: transform 0.2s;">
+                        🛒 Comprar
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -301,7 +303,7 @@
                                 <span style="font-weight: bold; color: #333; font-size: 1.1em;">S/ ${ami.precio}</span>
                                 <span style="color: #888; font-size: 0.85em;">⭐ 5.0</span>
                             </div>
-                            <button onclick="abrirDetalles(${index})" style="display: block; width: 100%; background: #fff0f5; color: #d87093; padding: 10px; border: none; border-radius: 20px; margin-top: 15px; font-weight: bold; font-family: inherit; cursor: pointer;">Ver Detalles</button>
+                            <button onclick="abrirDetalles(${index})" style="display: block; width: 100%; background: #fff0f5; color: #d87093; padding: 10px; border: none; border-radius: 20px; margin-top: 15px; font-weight: bold; font-family: inherit; cursor: pointer;">Detalles</button>
                         </div>
                     `;
                     grid.appendChild(item);
@@ -325,7 +327,7 @@
             const msj = encodeURIComponent(`Hola, quisiera encargar el amigurumi "${ami.nombre}". ¿Cuál es el precio y tiempo de entrega?`);
             document.getElementById('modal-btn-comprar').href = `https://wa.me/51922818179?text=${msj}`;
             
-            document.getElementById('modal-detalles').style.display = 'block';
+            document.getElementById('modal-detalles').style.display = 'flex'; // Usamos flex para centrar
             document.body.style.overflowY = 'hidden'; // Ocultar scroll de fondo
         }
 
