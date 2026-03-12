@@ -44,8 +44,9 @@
             border-bottom-right-radius: 30px;
             box-shadow: 0 4px 15px rgba(255, 183, 197, 0.5);
             margin-bottom: 20px;
-            position: relative;
-            z-index: 10;
+            position: sticky;
+            top: 0;
+            z-index: 4000;
         }
 
         .logo {
@@ -68,6 +69,7 @@
             padding: 0;
             display: flex;
             gap: 15px;
+            align-items: center;
         }
 
         nav a {
@@ -75,10 +77,51 @@
             color: white;
             font-weight: bold;
             font-size: 1.1em;
+            position: relative;
         }
 
-        nav a:hover {
+        nav a:hover, .dropdown:hover > a {
             color: #ffe4e1;
+        }
+
+        /* Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fff0f5;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            z-index: 4001;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .dropdown-content a {
+            color: #d87093;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            font-size: 1em;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ffe4e1;
+            color: #c75b7a;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
 
         /* Estilos del Banner Principal (Hero) */
@@ -338,6 +381,17 @@
         <nav>
             <ul>
                 <li><a href="index.html">Inicio</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)">Categorías ▾</a>
+                    <div class="dropdown-content">
+                        <a href="catalogo.html?cat=san_valentin">San Valentín</a>
+                        <a href="catalogo.html?cat=dia_mujer">Día de la Mujer</a>
+                        <a href="catalogo.html?cat=flores_amarillas">Flores Amarillas</a>
+                        <a href="catalogo.html?cat=dia_nino">Día del Niño</a>
+                        <a href="catalogo.html?cat=para_ellos">Para Ellos</a>
+                        <a href="catalogo.html?cat=para_ellas">Para Ellas</a>
+                    </div>
+                </li>
                 <li><a href="catalogo.html">Catálogo</a></li>
                 <li><a href="contacto.html">Contacto</a></li>
                 <li><a href="logeo.html"
