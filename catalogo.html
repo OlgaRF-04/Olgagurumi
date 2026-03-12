@@ -375,7 +375,74 @@
     <script src="cart.js"></script>
     <script>
         // --- CONFIGURACIÓN ---
-        // La función abrirDetalles ahora viene desde cart.js
+        const API_URL = 'https://qawdjysxudpymenemach.supabase.co/rest/v1/amigurumis?select=*';
+        const API_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhd2RqeXN4dWRweW1lbmVtYWNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NjAyNTgsImV4cCI6MjA3ODUzNjI1OH0.HBcysWDY8Nzahfx1doBN12mQJb1PNinxLspD6eCDp3A';
+
+        async function cargarCatalogo() {
+            try {
+                const response = await fetch(API_URL, {
+                    headers: {
+                        'apikey': API_KEY,
+                        'Authorization': 'Bearer ' + API_KEY
+                    }
+                });
+
+                if (!response.ok) throw new Error('Error al conectar con Supabase');
+
+                let productos = await response.json();
+                
+                // Mapear el param de categoría de la URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const categoriaSeleccionada = urlParams.get('cat');
+                
+                if (categoriaSeleccionada) {
+                    productos = productos.filter(ami => ami.categoria && ami.categoria.includes(categoriaSeleccionada));
+                    
+                    const titulosCategorias = {
+                        'san_valentin': 'San Valentín 💖',
+                        'dia_mujer': 'Día de la Mujer 🌸',
+                        'flores_amarillas': 'Flores Amarillas 🌻',
+                        'dia_nino': 'Día del Niño 🧸',
+                        'para_ellos': 'Para Ellos 🎁',
+                        'para_ellas': 'Para Ellas 💝'
+                    };
+                    
+                    const tituloText = titulosCategorias[categoriaSeleccionada] || 'Categoría Especial';
+                    document.querySelector('h2').innerText = tituloText;
+                    
+                    if (productos.length === 0) {
+                        document.getElementById('catalogo-grid').innerHTML = '<p style="text-align:center; width:100%; color:#d87093;">No hay amigurumis en esta categoría aún.</p>';
+                        return;
+                    }
+                }
+                
+                window.catalogoAmigurumis = productos; // Guardamos globalmente para el modal
+                const grid = document.getElementById('catalogo-grid');
+                grid.innerHTML = '';
+
+                productos.forEach((ami, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'producto-card';
+                    item.innerHTML = `
+                        <div onclick="toggleHeart(event, this)" style="cursor: pointer; position: absolute; top: 20px; right: 20px; background: #ffe4e1; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; color: #d87093; font-size: 14px; font-weight: bold; z-index: 1;">♡</div>
+                        <img src="${ami.imagen_url || 'https://via.placeholder.com/250'}" alt="${ami.nombre}">
+                        <div style="margin-top: 10px;">
+                            <h3 style="margin: 0; font-size: 1.1em; color: #333; font-weight: bold;">${ami.nombre}</h3>
+                            <div style="margin-top: 5px;">
+                                <span style="font-weight: bold; color: #333; font-size: 1.1em;">S/ ${ami.precio}</span>
+                            </div>
+                            <button onclick="abrirDetalles(${index})" style="display: block; width: 100%; background: #fff0f5; color: #d87093; padding: 10px; border: none; border-radius: 20px; margin-top: 15px; font-weight: bold; font-family: inherit; cursor: pointer;">Detalles</button>
+                        </div>
+                    `;
+                    grid.appendChild(item);
+                });
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('catalogo-grid').innerHTML = '<p>Error cargando catálogo.</p>';
+            }
+        }
+
+        cargarCatalogo();
 
 
         window.cerrarDetalles = function() {
