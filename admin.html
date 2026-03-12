@@ -237,7 +237,15 @@
     <script>
         const SUPABASE_URL = 'https://qawdjysxudpymenemach.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhd2RqeXN4dWRweW1lbmVtYWNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NjAyNTgsImV4cCI6MjA3ODUzNjI1OH0.HBcysWDY8Nzahfx1doBN12mQJb1PNinxLspD6eCDp3A';
+        
+        // Cliente principal (Para verificar sesión)
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Cliente anónimo puro (Para realizar operaciones en base de datos sin restricciones de RLS authenticated)
+        const supabaseAnon = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+            auth: { persistSession: false },
+            global: { headers: { Authorization: `Bearer ${SUPABASE_KEY}` } }
+        });
         
         // PROTEGER PÁGINA (Al login si no hay sesión)
         async function checkAuth() {
@@ -339,7 +347,7 @@
 
         // --- CARGAR PRODUCTOS ---
         async function cargarPreview() {
-            const { data } = await supabaseClient.from('amigurumis').select('*').order('created_at', { ascending: false });
+            const { data } = await supabaseAnon.from('amigurumis').select('*').order('created_at', { ascending: false });
             if(data) {
                 productosCache = data; 
                 galeria.innerHTML = '';
@@ -410,9 +418,9 @@
         // --- ELIMINAR ---
         window.eliminarProducto = async (id) => {
             if(!confirm("¿Borrar definitivamente?")) return;
-            const { error } = await supabaseClient.from('amigurumis').delete().eq('id', id);
+            const { error } = await supabaseAnon.from('amigurumis').delete().eq('id', id);
             if(!error) { alert("¡Eliminado!"); cargarPreview(); }
-            else { alert("Error al borrar (Revisa permisos DELETE en Supabase)"); }
+            else { alert("Error al borrar (Revisa permisos DELETE en Supabase): " + error.message); }
         };
 
         // --- GUARDAR (CREAR O ACTUALIZAR) ---
@@ -433,8 +441,18 @@
                     const ext = archivoImagen.name ? archivoImagen.name.split('.').pop() : 'jpg';
                     const nombreLimpio = archivoImagen.name ? archivoImagen.name.replace(/[^a-zA-Z0-9]/g, '_') : 'img';
                     const nombreArchivo = `public/${Date.now()}_${nombreLimpio}.${ext}`;
-                    await supabaseClient.storage.from('fotos_amigurumis').upload(nombreArchivo, archivoImagen);
-                    const { data } = supabaseClient.storage.from('fotos_amigurumis').getPublicUrl(nombreArchivo);
+                    
+                    const { data: uploadData, error: uploadError } = await supabaseAnon.storage.from('fotos_amigurumis').upload(nombreArchivo, archivoImagen, {
+                        cacheControl: '3600',
+                        upsert: true,
+                        contentType: archivoImagen.type || 'image/jpeg'
+                    });
+                    
+                    if (uploadError) {
+                        throw new Error('No se pudo subir la foto: ' + uploadError.message);
+                    }
+
+                    const { data } = supabaseAnon.storage.from('fotos_amigurumis').getPublicUrl(nombreArchivo);
                     urlFinalFoto = data.publicUrl;
                 }
 
@@ -450,17 +468,20 @@
                     datos.imagen_url = urlFinalFoto;
                 }
 
-                let error;
+                let dbError;
                 if (editandoID) {
-                    const result = await supabaseClient.from('amigurumis').update(datos).eq('id', editandoID);
-                    error = result.error;
+                    const { data, error } = await supabaseAnon.from('amigurumis').update(datos).eq('id', editandoID).select();
+                    if (data && data.length === 0 && !error) {
+                        throw new Error("El producto no existe o está bloqueado por permisos.");
+                    }
+                    dbError = error;
                 } else {
                     if (!urlFinalFoto) throw new Error("Error interno: Falta URL de foto");
-                    const result = await supabaseClient.from('amigurumis').insert([datos]);
-                    error = result.error;
+                    const { error } = await supabaseAnon.from('amigurumis').insert([datos]);
+                    dbError = error;
                 }
 
-                if (error) throw error;
+                if (dbError) throw new Error('Error en Base de Datos: ' + dbError.message);
 
                 alert(editandoID ? '¡Producto actualizado!' : '¡Producto creado!');
                 cancelarEdicion();
