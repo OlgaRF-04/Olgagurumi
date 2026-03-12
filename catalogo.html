@@ -130,26 +130,36 @@
         /* Menú Móvil */
         .menu-toggle {
             display: none;
-            font-size: 24px;
+            font-size: 28px;
             cursor: pointer;
             color: white;
+            z-index: 1001; /* Asegura que la X quede por encima de la barra lateral */
+            position: relative;
         }
 
         @media (max-width: 768px) {
+            nav {
+                position: absolute; /* Saca al nav del flujo del header, empujando las 3 rayitas a la derecha */
+            }
+
             nav ul {
-                display: none;
+                display: flex;
                 flex-direction: column;
-                width: 100%;
-                position: absolute;
-                top: 70px;
-                left: 0;
+                position: fixed;
+                top: 0;
+                right: -250px; /* Escondido a la derecha */
+                width: 250px;
+                height: 100vh;
                 background: #ffb7c5;
-                padding: 20px;
-                text-align: center;
+                padding: 80px 20px 20px 30px; /* Espacio superior para convivir con el botón */
+                text-align: left;
+                box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+                transition: right 0.3s ease; /* Animación de despliegue */
+                z-index: 1000;
             }
 
             nav ul.showing {
-                display: flex;
+                right: 0; /* Aparece desplazándose hacia la izquierda */
             }
 
             .menu-toggle {
@@ -263,6 +273,7 @@
         if (menuToggle) {
             menuToggle.addEventListener('click', () => {
                 navUl.classList.toggle('showing');
+                menuToggle.textContent = navUl.classList.contains('showing') ? '✕' : '☰';
             });
         }
     </script>
