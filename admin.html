@@ -223,6 +223,17 @@
             <label>Nombre:</label><input type="text" id="nombre" required>
             <label>Descripción:</label><textarea id="descripcion" rows="3"></textarea>
             
+            <label>Categoría:</label>
+            <select id="categoria" style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px;">
+                <option value="sin_categoria">Sin Categoría (General)</option>
+                <option value="san_valentin">San Valentín</option>
+                <option value="dia_mujer">Día de la Mujer</option>
+                <option value="flores_amarillas">Flores Amarillas</option>
+                <option value="dia_nino">Día del Niño</option>
+                <option value="para_ellos">Para Ellos</option>
+                <option value="para_ellas">Para Ellas</option>
+            </select>
+            
             <label>Foto:</label>
             <input type="file" id="imagen" accept="image/*">
             <small id="aviso-foto" style="color:#888; display:none;">(Deja esto vacío si no quieres cambiar la foto actual)</small>
@@ -403,6 +414,7 @@
 
             document.getElementById('nombre').value = producto.nombre;
             document.getElementById('descripcion').value = producto.descripcion || '';
+            document.getElementById('categoria').value = producto.categoria || 'sin_categoria';
             document.getElementById('precio').value = producto.precio;
             document.getElementById('precio_patron').value = producto.precio_patron;
             document.getElementById('url_patron').value = producto.url_patron || '';
@@ -482,6 +494,7 @@
                 const datos = {
                     nombre,
                     descripcion: document.getElementById('descripcion').value,
+                    categoria: document.getElementById('categoria').value,
                     precio: precio ? parseFloat(precio) : null,
                     precio_patron: document.getElementById('precio_patron').value ? parseFloat(document.getElementById('precio_patron').value) : null,
                     url_patron: document.getElementById('url_patron').value || null

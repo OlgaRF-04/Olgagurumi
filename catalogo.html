@@ -367,7 +367,33 @@
 
                 if (!response.ok) throw new Error('Error al conectar con Supabase');
 
-                const productos = await response.json();
+                let productos = await response.json();
+                
+                // Mapear el param de categoría de la URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const categoriaSeleccionada = urlParams.get('cat');
+                
+                if (categoriaSeleccionada) {
+                    productos = productos.filter(ami => ami.categoria === categoriaSeleccionada);
+                    
+                    const titulosCategorias = {
+                        'san_valentin': 'San Valentín 💖',
+                        'dia_mujer': 'Día de la Mujer 🌸',
+                        'flores_amarillas': 'Flores Amarillas 🌻',
+                        'dia_nino': 'Día del Niño 🧸',
+                        'para_ellos': 'Para Ellos 🎁',
+                        'para_ellas': 'Para Ellas 💝'
+                    };
+                    
+                    const tituloText = titulosCategorias[categoriaSeleccionada] || 'Categoría Especial';
+                    document.querySelector('h2').innerText = tituloText;
+                    
+                    if (productos.length === 0) {
+                        document.getElementById('catalogo-grid').innerHTML = '<p style="text-align:center; width:100%; color:#d87093;">No hay amigurumis en esta categoría aún.</p>';
+                        return;
+                    }
+                }
+                
                 window.catalogoAmigurumis = productos; // Guardamos globalmente para el modal
                 const grid = document.getElementById('catalogo-grid');
                 grid.innerHTML = '';
