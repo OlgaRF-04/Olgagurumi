@@ -7,6 +7,7 @@
     
     <link rel="icon" href="logo.jpg" type="image/jpeg">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
     <style>
         /* --- REGLA MAESTRA: Evita que los rellenos desborden el tamaño --- */
         * { box-sizing: border-box; }
@@ -140,6 +141,34 @@
         .btn-borrar:hover { background-color: #ff4c4c; }
         .btn-editar:hover { background-color: #3b9add; }
 
+        /* LOGOUT */
+        .btn-logout {
+            background: transparent; color: var(--rosa-fuerte); border: 2px solid var(--rosa-fuerte);
+            padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold;
+            transition: 0.3s;
+        }
+        .btn-logout:hover { background: var(--rosa-fuerte); color: white; }
+
+        /* MODAL DE RECORTE */
+        .modal-crop {
+            display: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000;
+            justify-content: center; align-items: center; padding: 20px;
+        }
+        .modal-crop-content {
+            background: #fff; padding: 20px; border-radius: 20px;
+            width: 100%; max-width: 600px;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .crop-container {
+            width: 100%; max-height: 400px; min-height: 200px; overflow: hidden; margin-bottom: 20px; background:#f4f4f4; border-radius: 10px;
+        }
+        .crop-container img { max-width: 100%; display: block; }
+        .botones-modal { display: flex; gap: 10px; width: 100%; }
+        .btn-secundario { background: #ccc; }
+        .btn-secundario:hover { background: #bbb; }
+
         @media (max-width: 768px) {
             header { padding: 5px 15px; } 
             .logo img { height: 40px; width: 40px; } 
@@ -155,7 +184,10 @@
             <div class="logo">
                 <a href="index.html"><img src="logo.jpg" alt="Olga Gurumi"></a>
             </div>
-            <a href="index.html" style="text-decoration: none; color: var(--texto-gris); font-weight: bold; font-size: 0.9em;">Ir a la Tienda &rarr;</a>
+            <div style="display: flex; gap: 15px; align-items: center;">
+                <a href="index.html" style="text-decoration: none; color: var(--texto-gris); font-weight: bold; font-size: 0.9em;">Ir a la Tienda &rarr;</a>
+                <button id="btn-logout" class="btn-logout">Cerrar Sesión</button>
+            </div>
         </nav>
     </header>
 
@@ -185,12 +217,43 @@
         <div id="galeria">Cargando...</div>
     </main>
 
+    <!-- Modal para Recortar -->
+    <div id="modal-crop" class="modal-crop">
+        <div class="modal-crop-content">
+            <h3 style="color: var(--rosa-fuerte); margin-top:0;">Ajustar Imagen</h3>
+            <div class="crop-container">
+                <img id="image-to-crop" src="">
+            </div>
+            <div class="botones-modal">
+                <button type="button" class="btn-submit btn-secundario" id="btn-cancelar-crop">Cancelar</button>
+                <button type="button" class="btn-submit" id="btn-aplicar-crop">Aplicar y Comprimir</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         const SUPABASE_URL = 'https://qawdjysxudpymenemach.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhd2RqeXN4dWRweW1lbmVtYWNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NjAyNTgsImV4cCI6MjA3ODUzNjI1OH0.HBcysWDY8Nzahfx1doBN12mQJb1PNinxLspD6eCDp3A';
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
+        // PROTEGER PÁGINA (Al login si no hay sesión)
+        async function checkAuth() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (!session) {
+                window.location.href = 'logeo.html';
+            }
+        }
+        checkAuth();
+
+        // LOGOUT
+        document.getElementById('btn-logout').addEventListener('click', async () => {
+            await supabaseClient.auth.signOut();
+            window.location.href = 'logeo.html';
+        });
+
         const galeria = document.getElementById('galeria');
         const formSubida = document.getElementById('form-subida');
         const btnSubir = document.getElementById('btn-subir');
@@ -200,6 +263,77 @@
 
         let productosCache = []; 
         let editandoID = null;   
+
+        // LOGIC FOR CROP & COMPRESS
+        const imagenInput = document.getElementById('imagen');
+        const modalCrop = document.getElementById('modal-crop');
+        const imageToCrop = document.getElementById('image-to-crop');
+        const btnCancelarCrop = document.getElementById('btn-cancelar-crop');
+        const btnAplicarCrop = document.getElementById('btn-aplicar-crop');
+        let cropper = null;
+        let archivoImagenFinal = null;
+
+        imagenInput.addEventListener('change', (e) => {
+            const files = e.target.files;
+            if (files && files.length > 0) {
+                const file = files[0];
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    imageToCrop.src = event.target.result;
+                    modalCrop.style.display = 'flex';
+                    if (cropper) cropper.destroy();
+                    cropper = new Cropper(imageToCrop, {
+                        aspectRatio: 1, // Cuadrado por defecto
+                        viewMode: 2,
+                        autoCropArea: 1
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        btnCancelarCrop.addEventListener('click', () => {
+            modalCrop.style.display = 'none';
+            if (cropper) cropper.destroy();
+            imagenInput.value = ''; // Reset input
+            archivoImagenFinal = null;
+        });
+
+        btnAplicarCrop.addEventListener('click', async () => {
+            if (!cropper) return;
+            btnAplicarCrop.textContent = "Procesando...";
+            btnAplicarCrop.disabled = true;
+
+            const canvas = cropper.getCroppedCanvas({
+                maxWidth: 1024,
+                maxHeight: 1024
+            });
+
+            canvas.toBlob(async (blob) => {
+                try {
+                    const options = {
+                        maxSizeMB: 0.3, // Comprimir a ~300kb
+                        maxWidthOrHeight: 800,
+                        useWebWorker: true
+                    };
+                    const imageFile = new File([blob], "img_recortada.jpg", { type: "image/jpeg" });
+                    const compressedFile = await browserImageCompression(imageFile, options);
+                    
+                    archivoImagenFinal = compressedFile;
+                    modalCrop.style.display = 'none';
+                    if (cropper) cropper.destroy();
+                    
+                    avisoFoto.textContent = "✅ Imagen recortada y procesada correctamente";
+                    avisoFoto.style.display = "block";
+                    avisoFoto.style.color = "green";
+                } catch (error) {
+                    alert("Error al comprimir la imagen.");
+                } finally {
+                    btnAplicarCrop.textContent = "Aplicar y Comprimir";
+                    btnAplicarCrop.disabled = false;
+                }
+            }, 'image/jpeg', 0.9);
+        });
 
         // --- CARGAR PRODUCTOS ---
         async function cargarPreview() {
@@ -241,11 +375,16 @@
             document.getElementById('url_patron').value = producto.url_patron || '';
             
             editandoID = id;
+            archivoImagenFinal = null;
             tituloForm.textContent = "Editar Producto";
             btnSubir.textContent = "Actualizar Cambios";
             btnSubir.style.background = "#4dabf7"; 
             btnCancelar.style.display = "block";
+            
+            avisoFoto.textContent = "(Deja esto vacío si no quieres cambiar la foto actual)";
+            avisoFoto.style.color = "#888";
             avisoFoto.style.display = "block";
+            
             document.getElementById('imagen').required = false; 
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -255,10 +394,13 @@
         window.cancelarEdicion = () => {
             formSubida.reset();
             editandoID = null;
+            archivoImagenFinal = null;
             tituloForm.textContent = "Subir Producto";
             btnSubir.textContent = "Subir Producto";
             btnSubir.style.background = "#e69ab0"; 
             btnCancelar.style.display = "none";
+            avisoFoto.textContent = "(Deja esto vacío si no quieres cambiar la foto actual)";
+            avisoFoto.style.color = "#888";
             avisoFoto.style.display = "none";
             document.getElementById('imagen').required = true;
         };
@@ -275,7 +417,7 @@
         formSubida.addEventListener('submit', async (e) => {
             e.preventDefault(); 
             const nombre = document.getElementById('nombre').value;
-            const archivoImagen = document.getElementById('imagen').files[0];
+            const archivoImagen = archivoImagenFinal || document.getElementById('imagen').files[0];
             const precio = document.getElementById('precio').value;
             
             if (!editandoID && !archivoImagen) { alert('La foto es obligatoria para nuevos productos'); return; }
@@ -286,7 +428,9 @@
                 let urlFinalFoto = null;
 
                 if (archivoImagen) {
-                    const nombreArchivo = `public/${Date.now()}_${archivoImagen.name.replace(/[^a-zA-Z0-9]/g, '_')}`;
+                    const ext = archivoImagen.name ? archivoImagen.name.split('.').pop() : 'jpg';
+                    const nombreLimpio = archivoImagen.name ? archivoImagen.name.replace(/[^a-zA-Z0-9]/g, '_') : 'img';
+                    const nombreArchivo = `public/${Date.now()}_${nombreLimpio}.${ext}`;
                     await supabaseClient.storage.from('fotos_amigurumis').upload(nombreArchivo, archivoImagen);
                     const { data } = supabaseClient.storage.from('fotos_amigurumis').getPublicUrl(nombreArchivo);
                     urlFinalFoto = data.publicUrl;

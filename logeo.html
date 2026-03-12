@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Olga Gurumi</title>
+    
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        :root { 
+            --rosa-header: #ffe4e1; 
+            --rosa-fuerte: #e69ab0; 
+            --blanco: #ffffff; 
+            --texto-gris: #5c5c5c; 
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+            background: var(--rosa-header);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: var(--texto-gris);
+        }
+
+        .login-card {
+            background: var(--blanco);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .login-card img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            object-fit: cover;
+        }
+
+        h2 { 
+            margin-top: 0; 
+            color: var(--rosa-fuerte); 
+            margin-bottom: 25px; 
+            font-size: 1.5em;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: 0.3s;
+        }
+
+        input:focus { 
+            border-color: var(--rosa-fuerte); 
+            outline: none; 
+            box-shadow: 0 0 5px rgba(230, 154, 176, 0.4);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 15px;
+            background: var(--rosa-fuerte);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover { 
+            background: #d6809a; 
+        }
+
+        .error-msg { 
+            color: #ff6b6b; 
+            font-size: 0.9em; 
+            margin-bottom: 15px; 
+            display: none; 
+            background: #ffe3e3;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .enlace-volver { 
+            display: block; 
+            margin-top: 25px; 
+            color: #888; 
+            text-decoration: none; 
+            font-size: 0.9em; 
+            transition: 0.3s;
+        }
+
+        .enlace-volver:hover { 
+            color: var(--rosa-fuerte); 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <img src="logo.jpg" alt="Logo de Olga Gurumi">
+        <h2>Acceso Privado</h2>
+        <div class="error-msg" id="error-msg"></div>
+        
+        <form id="login-form">
+            <input type="email" id="email" placeholder="Tu correo electrónico..." required>
+            <input type="password" id="password" placeholder="Tu contraseña..." required>
+            <button type="submit" class="btn-submit" id="btn-login">Ingresar</button>
+        </form>
+        
+        <a href="index.html" class="enlace-volver">&larr; Volver a la Tienda</a>
+    </div>
+
+    <!-- Scripts de Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://qawdjysxudpymenemach.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhd2RqeXN4dWRweW1lbmVtYWNoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI5NjAyNTgsImV4cCI6MjA3ODUzNjI1OH0.HBcysWDY8Nzahfx1doBN12mQJb1PNinxLspD6eCDp3A';
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // Si ya está logeado, redirige a admin
+        async function verificarAutenticacion() {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                window.location.href = 'admin.html';
+            }
+        }
+        verificarAutenticacion();
+
+        // Manejar envío de login
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('btn-login');
+            const errorMsg = document.getElementById('error-msg');
+
+            btn.textContent = 'Verificando...';
+            btn.disabled = true;
+            errorMsg.style.display = 'none';
+
+            const { data, error } = await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password,
+            });
+
+            if (error) {
+                errorMsg.textContent = 'Correo o contraseña incorrectos.';
+                errorMsg.style.display = 'block';
+                btn.textContent = 'Ingresar';
+                btn.disabled = false;
+            } else {
+                window.location.href = 'admin.html';
+            }
+        });
+    </script>
+</body>
+</html>
