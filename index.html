@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="opK1ZzoJHNKNPZb4RzHL9etfpUm5pa0m4yEZ4M5M8I4" />
     <title>Olga Gurumi - Inicio</title>
+    <link rel="stylesheet" href="cart.css">
     <style>
         /* ESTILOS GENERALES (Mantenemos tu diseño) */
         body,
@@ -402,6 +403,11 @@
                 <li><a href="logeo.html"
                         style="background-color: white; color: #ffb7c5; padding: 5px 15px; border-radius: 20px; display: inline-block;">Admin</a>
                 </li>
+                <li>
+                    <a href="javascript:void(0)" onclick="abrirCarrito()" style="position:relative; font-size: 1.2em;">
+                        🛒 <span class="cart-badge" style="position: absolute; top: -8px; right: -12px; background: #d87093; color: white; font-size: 0.7em; padding: 2px 6px; border-radius: 50%; display: none;">0</span>
+                    </a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -450,9 +456,9 @@
                 </div>
 
                 <!-- Info -->
-                <div style="flex: 1 1 300px; display: flex; flex-direction: column; justify-content: flex-start; align-items: center; text-align: center;">
+                <div style="flex: 1 1 300px; display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start; text-align: left;">
                     <div
-                        style="display: flex; flex-direction: column; align-items: center; margin-bottom: 15px; width: 100%;">
+                        style="display: flex; flex-direction: column; align-items: flex-start; margin-bottom: 15px; width: 100%;">
                         <h2 id="modal-titulo" style="margin: 0 0 5px 0; font-size: 1.4em; color: #333;"></h2>
                         <h2 id="modal-precio"
                             style="margin: 0; font-size: 1.4em; color: #d87093;">
@@ -462,11 +468,19 @@
                     <p style="font-weight: bold; margin: 10px 0 5px 0; color: #333; font-size: 1em;">Descripción</p>
                     <p id="modal-desc" style="color: #666; font-size: 0.95em; line-height: 1.5; margin: 0;"></p>
 
-                    <div style="padding-top: 25px; text-align: center; width: 100%;">
-                        <a id="modal-btn-comprar" href="#" target="_blank"
-                            style="display: block; width: 100%; box-sizing: border-box; background: #ffb7c5; color: white; text-align: center; padding: 15px; border-radius: 25px; font-size: 1.1em; font-weight: bold; text-decoration: none; box-shadow: 0 5px 15px rgba(255,183,197,0.5); transition: transform 0.2s;">
-                            🛒 Comprar
-                        </a>
+                    <div style="padding-top: 25px; width: 100%;">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <span style="font-weight: bold; color: #333;">Cantidad:</span>
+                            <div style="display: flex; align-items: center; border: 1px solid #ddd; border-radius: 10px; overflow: hidden;">
+                                <button onclick="cambiarCantidadModal(-1)" style="background: white; border: none; padding: 8px 12px; cursor: pointer; font-size: 1.2em; color: #d87093;">-</button>
+                                <input type="number" id="modal-cantidad" value="1" min="1" style="width: 40px; text-align: center; border: none; border-left: 1px solid #ddd; border-right: 1px solid #ddd; font-weight: bold; outline: none; padding: 8px 0; -moz-appearance: textfield;">
+                                <button onclick="cambiarCantidadModal(1)" style="background: white; border: none; padding: 8px 12px; cursor: pointer; font-size: 1.2em; color: #d87093;">+</button>
+                            </div>
+                        </div>
+                        <button id="modal-btn-comprar" onclick="agregarAlCarrito()"
+                            style="display: block; width: 100%; box-sizing: border-box; background: #ffce94; color: white; text-align: center; padding: 15px; border-radius: 25px; font-size: 1.1em; font-weight: bold; border: none; cursor: pointer; transition: transform 0.2s;">
+                            Agregar al carrito
+                        </button>
                     </div>
                 </div>
             </div>
@@ -477,6 +491,7 @@
         <p>&copy; 2024 Olga Gurumi - Hecho a mano con amor ❤️</p>
     </footer>
 
+    <script src="cart.js"></script>
     <script>
         // --- CONFIGURACIÓN DE SUPABASE ---
         // ¡IMPORTANTE! Si ya tenías tus claves puestas, NO BORRES las tuyas.
@@ -528,20 +543,7 @@
         // Ejecutar al cargar la página
         cargarInicio();
 
-        // Funciones del Modal
-        window.abrirDetalles = function (index) {
-            const ami = window.catalogoAmigurumis[index];
-            document.getElementById('modal-img').src = ami.imagen_url || 'https://via.placeholder.com/250';
-            document.getElementById('modal-titulo').innerText = ami.nombre;
-            document.getElementById('modal-precio').innerText = `S/ ${ami.precio}`;
-            document.getElementById('modal-desc').innerText = ami.descripcion || 'Confeccionado a mano con hilos hipoalergénicos de alta calidad. Ideal para regalar mucho amor.';
-
-            const msj = encodeURIComponent(`Hola, quisiera encargar el amigurumi "${ami.nombre}". ¿Cuál es el precio y tiempo de entrega?`);
-            document.getElementById('modal-btn-comprar').href = `https://wa.me/51922818179?text=${msj}`;
-
-            document.getElementById('modal-detalles').style.display = 'flex'; // Usamos flex para centrar el cuadro flotante
-            document.body.style.overflowY = 'hidden'; // Ocultar scroll de fondo
-        }
+        // La función abrirDetalles ahora viene desde cart.js
 
         window.cerrarDetalles = function () {
             document.getElementById('modal-detalles').style.display = 'none';
