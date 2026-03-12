@@ -19,6 +19,10 @@
             --texto-gris: #5c5c5c; 
         }
         
+        body, html { 
+            overflow-x: hidden; 
+        }
+        
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
             background: var(--blanco); 
@@ -28,17 +32,28 @@
         
         /* HEADER ROSA + LOGO CIRCULAR */
         header { 
-            background: var(--rosa-header); 
-            padding: 5px 40px; 
-            border-bottom: 2px solid #eee; 
+            background-color: #ffb7c5;
+            padding: 15px 20px 25px 20px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 4px 15px rgba(255, 183, 197, 0.5);
+            margin-bottom: 20px;
         }
         nav { 
-            max-width: 1400px; margin: 0 auto; display: flex; 
+            width: 100%; max-width: 1400px; margin: 0 auto; display: flex; 
             justify-content: space-between; align-items: center; 
+        }
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
         }
         .logo img { 
             height: 50px; width: 50px; 
-            border-radius: 50%; object-fit: cover; border: 2px solid white; 
+            border-radius: 50%; object-fit: cover; border: 2px solid white; margin-right: 10px;
         }
 
         /* CONTENEDOR PRINCIPAL */
@@ -143,11 +158,11 @@
 
         /* LOGOUT */
         .btn-logout {
-            background: transparent; color: var(--rosa-fuerte); border: 2px solid var(--rosa-fuerte);
+            background: white; color: #ffb7c5; border: none;
             padding: 8px 15px; border-radius: 20px; cursor: pointer; font-weight: bold;
             transition: 0.3s;
         }
-        .btn-logout:hover { background: var(--rosa-fuerte); color: white; }
+        .btn-logout:hover { background: #fff0f5; }
 
         /* MODAL DE RECORTE */
         .modal-crop {
@@ -170,10 +185,13 @@
         .btn-secundario:hover { background: #bbb; }
 
         @media (max-width: 768px) {
-            header { padding: 5px 15px; } 
-            .logo img { height: 40px; width: 40px; } 
+            header { padding: 15px 15px 25px 15px; } 
+            .logo { font-size: 1.5em; }
+            .logo img { height: 50px; width: 50px; } 
             #galeria { grid-template-columns: repeat(2, 1fr); gap: 10px; } 
             .item { padding: 10px; } 
+            .acciones { flex-direction: column; gap: 5px; }
+            .btn-accion { padding: 6px; font-size: 0.85em; }
         }
     </style>
 </head>
@@ -181,11 +199,11 @@
 
     <header>
         <nav>
-            <div class="logo">
-                <a href="index.html"><img src="logo.jpg" alt="Olga Gurumi"></a>
-            </div>
+            <a href="index.html" class="logo">
+                <img src="logo.jpg" alt="Olga Gurumi"> Olga Gurumi
+            </a>
             <div style="display: flex; gap: 15px; align-items: center;">
-                <a href="index.html" style="text-decoration: none; color: var(--texto-gris); font-weight: bold; font-size: 0.9em;">Ir a la Tienda &rarr;</a>
+                <a href="index.html" style="text-decoration: none; color: white; font-weight: bold; font-size: 0.9em;">Ir a la Tienda &rarr;</a>
                 <button id="btn-logout" class="btn-logout">Cerrar Sesión</button>
             </div>
         </nav>
