@@ -317,7 +317,8 @@
                         useWebWorker: true
                     };
                     const imageFile = new File([blob], "img_recortada.jpg", { type: "image/jpeg" });
-                    const compressedFile = await browserImageCompression(imageFile, options);
+                    // La librería exporta la variable global 'imageCompression'
+                    const compressedFile = await imageCompression(imageFile, options);
                     
                     archivoImagenFinal = compressedFile;
                     modalCrop.style.display = 'none';
@@ -327,7 +328,8 @@
                     avisoFoto.style.display = "block";
                     avisoFoto.style.color = "green";
                 } catch (error) {
-                    alert("Error al comprimir la imagen.");
+                    console.error("Error comprimiendo imagen:", error);
+                    alert("Error al comprimir la imagen: " + error.message);
                 } finally {
                     btnAplicarCrop.textContent = "Aplicar y Comprimir";
                     btnAplicarCrop.disabled = false;
