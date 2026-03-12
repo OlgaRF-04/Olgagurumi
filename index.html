@@ -32,6 +32,9 @@
             padding: 0;
             background-color: #fff0f5;
             color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
@@ -217,6 +220,9 @@
             max-width: 1200px;
             margin: 20px auto;
             padding: 0 20px;
+            flex: 1;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         h2 {
@@ -277,13 +283,12 @@
             background-color: #d87093;
         }
 
-        /* Footer */
         footer {
             text-align: center;
             background-color: #ffb7c5;
             color: white;
             padding: 20px;
-            margin-top: 40px;
+            margin-top: auto;
         }
 
         /* Menu Hamburguesa (Móvil) */
@@ -426,7 +431,7 @@
     <div id="modal-detalles"
         style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 3000; justify-content: center; align-items: center;">
         <div class="hide-scrollbar"
-            style="background: #fff0f5; width: 90%; max-width: 800px; border-radius: 30px; overflow-y: auto; max-height: 90vh; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.3);">
+            style="background: #fff0f5; width: 90%; max-width: 650px; border-radius: 30px; overflow-y: auto; max-height: 90vh; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.3);">
             <!-- Top Bar -->
             <div
                 style="display: flex; justify-content: space-between; padding: 15px 20px; align-items: center; background: #fff0f5; position: sticky; top: 0; z-index: 10;">
@@ -439,7 +444,7 @@
 
             <div style="display: flex; flex-wrap: wrap; padding: 0 15px 15px 15px; gap: 15px;">
                 <!-- Big Image -->
-                <div style="flex: 1 1 100%; display: flex; align-items: flex-start; justify-content: center;">
+                <div style="flex: 1 1 250px; display: flex; align-items: flex-start; justify-content: center;">
                     <img id="modal-img" src=""
                         style="width: 100%; max-width: 350px; display: block; border-radius: 20px; aspect-ratio: 1/1; object-fit: cover; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
                 </div>
