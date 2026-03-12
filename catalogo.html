@@ -374,7 +374,7 @@
                 const categoriaSeleccionada = urlParams.get('cat');
                 
                 if (categoriaSeleccionada) {
-                    productos = productos.filter(ami => ami.categoria === categoriaSeleccionada);
+                    productos = productos.filter(ami => ami.categoria && ami.categoria.includes(categoriaSeleccionada));
                     
                     const titulosCategorias = {
                         'san_valentin': 'San Valentín 💖',

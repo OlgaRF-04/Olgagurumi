@@ -223,16 +223,16 @@
             <label>Nombre:</label><input type="text" id="nombre" required>
             <label>Descripción:</label><textarea id="descripcion" rows="3"></textarea>
             
-            <label>Categoría:</label>
-            <select id="categoria" style="width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px;">
-                <option value="sin_categoria">Sin Categoría (General)</option>
-                <option value="san_valentin">San Valentín</option>
-                <option value="dia_mujer">Día de la Mujer</option>
-                <option value="flores_amarillas">Flores Amarillas</option>
-                <option value="dia_nino">Día del Niño</option>
-                <option value="para_ellos">Para Ellos</option>
-                <option value="para_ellas">Para Ellas</option>
-            </select>
+            <label>Categorías (Elige hasta 3):</label>
+            <div id="categorias-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; background: #fafafa;">
+                <label style="display: flex; align-items: center; gap: 6px; font-weight: normal; color: #555; margin: 0; cursor: pointer;"><input type="checkbox" name="categoria" value="sin_categoria"> Sin Categoría / General</label>
+                <label style="display: flex; align-items: center; gap: 6px; font-weight: normal; color: #555; margin: 0; cursor: pointer;"><input type="checkbox" name="categoria" value="san_valentin"> San Valentín</label>
+                <label style="display: flex; align-items: center; gap: 6px; font-weight: normal; color: #555; margin: 0; cursor: pointer;"><input type="checkbox" name="categoria" value="dia_mujer"> Día de la Mujer</label>
+                <label style="display: flex; align-items: center; gap: 6px; font-weight: normal; color: #555; margin: 0; cursor: pointer;"><input type="checkbox" name="categoria" value="flores_amarillas"> Flores Amarillas</label>
+                <label style="display: flex; align-items: center; gap: 6px; font-weight: normal; color: #555; margin: 0; cursor: pointer;"><input type="checkbox" name="categoria" value="dia_nino"> Día del Niño</label>
+                <label style="display: flex; align-items: center; gap: 6px; font-weight: normal; color: #555; margin: 0; cursor: pointer;"><input type="checkbox" name="categoria" value="para_ellos"> Para Ellos</label>
+                <label style="display: flex; align-items: center; gap: 6px; font-weight: normal; color: #555; margin: 0; cursor: pointer;"><input type="checkbox" name="categoria" value="para_ellas"> Para Ellas</label>
+            </div>
             
             <label>Foto:</label>
             <input type="file" id="imagen" accept="image/*">
@@ -302,6 +302,17 @@
         const btnCancelar = document.getElementById('btn-cancelar');
         const avisoFoto = document.getElementById('aviso-foto');
         const tituloForm = document.getElementById('form-titulo');
+
+        // Límite de 3 categorías seleccionadas
+        document.querySelectorAll('input[name="categoria"]').forEach(cb => {
+            cb.addEventListener('change', function() {
+                const checkedCount = document.querySelectorAll('input[name="categoria"]:checked').length;
+                if(checkedCount > 3) {
+                    this.checked = false;
+                    alert("Solo puedes elegir hasta 3 categorías para este amigurumi.");
+                }
+            });
+        });
 
         let productosCache = []; 
         let editandoID = null;   
@@ -414,7 +425,12 @@
 
             document.getElementById('nombre').value = producto.nombre;
             document.getElementById('descripcion').value = producto.descripcion || '';
-            document.getElementById('categoria').value = producto.categoria || 'sin_categoria';
+            
+            const categoriasGuardadas = producto.categoria ? producto.categoria.split(',') : ['sin_categoria'];
+            document.querySelectorAll('input[name="categoria"]').forEach(cb => {
+                cb.checked = categoriasGuardadas.includes(cb.value);
+            });
+            
             document.getElementById('precio').value = producto.precio;
             document.getElementById('precio_patron').value = producto.precio_patron;
             document.getElementById('url_patron').value = producto.url_patron || '';
@@ -438,6 +454,11 @@
         // --- CANCELAR EDICIÓN ---
         window.cancelarEdicion = () => {
             formSubida.reset();
+            
+            document.querySelectorAll('input[name="categoria"]').forEach(cb => cb.checked = false);
+            const defaultCat = document.querySelector('input[name="categoria"][value="sin_categoria"]');
+            if(defaultCat) defaultCat.checked = true;
+            
             editandoID = null;
             archivoImagenFinal = null;
             tituloForm.textContent = "Subir Producto";
@@ -491,10 +512,14 @@
                     urlFinalFoto = data.publicUrl;
                 }
 
+                // Obtenemos las categorías marcadas y las separamos por comas
+                const seleccionadas = Array.from(document.querySelectorAll('input[name="categoria"]:checked')).map(cb => cb.value);
+                const categoriaFinal = seleccionadas.length > 0 ? seleccionadas.join(',') : 'sin_categoria';
+
                 const datos = {
                     nombre,
                     descripcion: document.getElementById('descripcion').value,
-                    categoria: document.getElementById('categoria').value,
+                    categoria: categoriaFinal,
                     precio: precio ? parseFloat(precio) : null,
                     precio_patron: document.getElementById('precio_patron').value ? parseFloat(document.getElementById('precio_patron').value) : null,
                     url_patron: document.getElementById('url_patron').value || null
