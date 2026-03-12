@@ -21,6 +21,10 @@
             --fuente-cuerpo: "Lato", sans-serif;
         }
 
+        body, html {
+            overflow-x: hidden; /* Previene scroll horizontal accidental */
+        }
+        
         body {
             font-family: 'Segoe UI', sans-serif;
             margin: 0;
@@ -31,10 +35,16 @@
 
         header {
             background-color: #ffb7c5;
-            padding: 10px 20px;
+            padding: 15px 20px 25px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 4px 15px rgba(255, 183, 197, 0.5);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 10;
         }
 
         .logo {
@@ -219,19 +229,20 @@
                 flex-direction: column;
                 position: fixed;
                 top: 0;
-                right: -250px; /* Escondido a la derecha */
+                right: 0;
+                transform: translateX(100%); /* Escondido totalmente fuera de pantalla */
                 width: 250px;
                 height: 100vh;
                 background: #ffb7c5;
                 padding: 80px 20px 20px 30px; /* Espacio superior para convivir con el botón */
                 text-align: left;
                 box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-                transition: right 0.3s ease; /* Animación de despliegue */
+                transition: transform 0.3s ease; /* Animación de despliegue suave */
                 z-index: 1000;
             }
 
             nav ul.showing {
-                right: 0; /* Aparece desplazándose hacia la izquierda */
+                transform: translateX(0); /* Aparece hacia la izquierda */
             }
 
             .menu-toggle {

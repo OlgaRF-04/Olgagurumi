@@ -8,6 +8,10 @@
     <title>Olga Gurumi - Inicio</title>
     <style>
         /* ESTILOS GENERALES (Mantenemos tu diseño) */
+        body, html {
+            overflow-x: hidden; /* Previene scroll horizontal accidental */
+        }
+        
         body {
             font-family: 'Segoe UI', sans-serif;
             margin: 0;
@@ -18,11 +22,16 @@
 
         header {
             background-color: #ffb7c5;
-            padding: 10px 20px;
+            padding: 15px 20px 25px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+            box-shadow: 0 4px 15px rgba(255, 183, 197, 0.5);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 10;
         }
 
         .logo {
@@ -61,17 +70,17 @@
         /* Estilos del Banner Principal (Hero) */
         .hero-banner {
             position: relative;
-            width: 100%;
-            height: calc(100vh - 70px);
-            /* Ocupa toda la pantalla restando el header */
+            width: calc(100% - 40px);
+            margin: 0 auto 40px auto;
+            border-radius: 30px;
+            height: calc(80vh - 70px);
             background: linear-gradient(135deg, #d87093 0%, #ffb7c5 50%, #fbd3e9 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(255, 183, 197, 0.4);
         }
 
         .banner-content {
@@ -163,15 +172,12 @@
 
         .producto-card {
             background: white;
-            border-radius: 15px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            padding: 12px;
+            text-align: left;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s;
-        }
-
-        .producto-card:hover {
-            transform: translateY(-5px);
+            position: relative;
         }
 
         .producto-card img {
@@ -179,12 +185,13 @@
             aspect-ratio: 1 / 1;
             height: auto;
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 15px;
         }
 
         .producto-card h3 {
-            color: #d87093;
-            margin: 10px 0;
+            color: #333;
+            margin: 5px 0;
+            font-size: 1.1em;
         }
 
         .precio {
@@ -238,19 +245,20 @@
                 flex-direction: column;
                 position: fixed;
                 top: 0;
-                right: -250px; /* Escondido a la derecha */
+                right: 0;
+                transform: translateX(100%); /* Escondido totalmente fuera de pantalla */
                 width: 250px;
                 height: 100vh;
                 background: #ffb7c5;
                 padding: 80px 20px 20px 30px; /* Espacio superior para convivir con el botón */
                 text-align: left;
                 box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-                transition: right 0.3s ease; /* Animación de despliegue */
+                transition: transform 0.3s ease; /* Animación de despliegue suave */
                 z-index: 1000;
             }
 
             nav ul.showing {
-                right: 0; /* Aparece desplazándose hacia la izquierda */
+                transform: translateX(0); /* Aparece hacia la izquierda */
             }
 
             .menu-toggle {
@@ -322,6 +330,41 @@
         </div>
     </main>
 
+    <!-- Modal Detalles -->
+    <div id="modal-detalles" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fff0f5; z-index: 3000; overflow-y: auto;">
+        <!-- Top Bar -->
+        <div style="display: flex; justify-content: space-between; padding: 20px; align-items: center; background: #fff0f5; position: sticky; top: 0; z-index: 10;">
+            <button onclick="cerrarDetalles()" style="background: white; border: none; font-size: 20px; color: #333; cursor: pointer; border-radius: 30px; width: 45px; height: 45px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">←</button>
+            <h3 style="margin: 0; color: #333; font-weight: bold;">Details</h3>
+            <span style="font-size: 20px; background: white; border-radius: 30px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; color: #ffb7c5; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">♡</span>
+        </div>
+        
+        <!-- Big Image -->
+        <div style="padding: 0 20px;">
+            <img id="modal-img" src="" style="width: 100%; border-radius: 30px; aspect-ratio: 1/1; object-fit: cover; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
+        </div>
+        
+        <!-- Info -->
+        <div style="padding: 25px 20px; background: white; border-top-left-radius: 40px; border-top-right-radius: 40px; margin-top: -20px; position: relative; min-height: 50vh;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                <div>
+                    <h2 id="modal-titulo" style="margin: 0 0 5px 0; font-size: 1.5em; color: #333;"></h2>
+                    <p style="color: #666; font-size: 0.9em; margin: 0;">⭐ 5.0 (Rating)</p>
+                </div>
+                <h2 id="modal-precio" style="margin: 0; font-size: 1.5em; color: #333;"></h2>
+            </div>
+            
+            <p style="font-weight: bold; margin: 20px 0 5px 0; color: #333;">Description</p>
+            <p id="modal-desc" style="color: #888; font-size: 0.95em; line-height: 1.6; margin: 0;"></p>
+            
+            <div style="margin-top: 40px; text-align: center;">
+                <a id="modal-btn-comprar" href="#" target="_blank" style="display: block; width: 100%; background: #ffb7c5; color: white; text-align: center; padding: 18px; border-radius: 30px; font-size: 1.1em; font-weight: bold; text-decoration: none; box-shadow: 0 8px 20px rgba(255,183,197,0.6); transition: transform 0.2s;">
+                    🛒 Comprar por WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2024 Olga Gurumi - Hecho a mano con amor ❤️</p>
     </footer>
@@ -345,26 +388,27 @@
                 if (!response.ok) throw new Error('Error al conectar con Supabase');
 
                 const productos = await response.json();
+                window.catalogoAmigurumis = productos;
 
                 // Mostrar solo los primeros 4 productos en el inicio
                 const destacados = productos.slice(0, 4);
                 const grid = document.getElementById('productos-grid');
                 grid.innerHTML = '';
 
-                destacados.forEach(ami => {
-                    // --- AQUÍ ESTÁ EL CAMBIO QUE PEDISTE (OPCIÓN 2) ---
-                    const msj = encodeURIComponent(`Hola, quisiera encargar el amigurumi "${ami.nombre}". ¿Cuál es el precio y tiempo de entrega?`);
-                    // ---------------------------------------------------
-
+                destacados.forEach((ami, index) => {
                     const item = document.createElement('div');
                     item.className = 'producto-card';
                     item.innerHTML = `
+                        <div style="position: absolute; top: 20px; right: 20px; background: #ffe4e1; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; color: #d87093; font-size: 14px; font-weight: bold; z-index: 1;">♡</div>
                         <img src="${ami.imagen_url || 'https://via.placeholder.com/250'}" alt="${ami.nombre}">
-                        <h3>${ami.nombre}</h3>
-                        <p class="precio">S/ ${ami.precio}</p>
-                        <a href="https://wa.me/51922818179?text=${msj}" class="btn-comprar" target="_blank">
-                            Pedir Info
-                        </a>
+                        <div style="margin-top: 10px;">
+                            <h3 style="margin: 0; font-size: 1.1em; color: #333; font-weight: bold;">${ami.nombre}</h3>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+                                <span style="font-weight: bold; color: #333; font-size: 1.1em;">S/ ${ami.precio}</span>
+                                <span style="color: #888; font-size: 0.85em;">⭐ 5.0</span>
+                            </div>
+                            <button onclick="abrirDetalles(${index})" style="display: block; width: 100%; background: #fff0f5; color: #d87093; padding: 10px; border: none; border-radius: 20px; margin-top: 15px; font-weight: bold; font-family: inherit; cursor: pointer;">Ver Detalles</button>
+                        </div>
                     `;
                     grid.appendChild(item);
                 });
@@ -376,6 +420,26 @@
 
         // Ejecutar al cargar la página
         cargarInicio();
+
+        // Funciones del Modal
+        window.abrirDetalles = function(index) {
+            const ami = window.catalogoAmigurumis[index];
+            document.getElementById('modal-img').src = ami.imagen_url || 'https://via.placeholder.com/250';
+            document.getElementById('modal-titulo').innerText = ami.nombre;
+            document.getElementById('modal-precio').innerText = `S/ ${ami.precio}`;
+            document.getElementById('modal-desc').innerText = ami.descripcion || 'Confeccionado a mano con hilos hipoalergénicos de alta calidad. Ideal para regalar mucho amor.';
+            
+            const msj = encodeURIComponent(`Hola, quisiera encargar el amigurumi "${ami.nombre}". ¿Cuál es el precio y tiempo de entrega?`);
+            document.getElementById('modal-btn-comprar').href = `https://wa.me/51922818179?text=${msj}`;
+            
+            document.getElementById('modal-detalles').style.display = 'block';
+            document.body.style.overflowY = 'hidden'; // Ocultar scroll de fondo
+        }
+
+        window.cerrarDetalles = function() {
+            document.getElementById('modal-detalles').style.display = 'none';
+            document.body.style.overflowY = 'auto'; // Restaurar scroll
+        }
 
         // Menú Móvil
         const menuToggle = document.querySelector('.menu-toggle');
